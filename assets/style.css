@@ -1,0 +1,47 @@
+html {
+  scroll-padding-top: 88px;
+}
+
+body {
+  background-color: #f4f6fa;
+}
+
+.navbar.sticky-top {
+  z-index: 1030;
+}
+
+.page-hero {
+  background: linear-gradient(135deg, #1f3864, #2f5597);
+  color: #ffffff;
+  border-radius: 1rem;
+}
+
+.page-hero .lead {
+  color: #dce6f5;
+}
+
+.card {
+  border: 0;
+  box-shadow: 0 4px 14px rgba(31, 56, 100, 0.08);
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.task-card {
+  border-left: 4px solid #e87d0e;
+}
+
+.done-card {
+  border-left: 4px solid #198754;
+}
+
+.anchor-target {
+  scroll-margin-top: 90px;
+}
+
+.code-block {
+  font-size: 0.86rem;
+}
