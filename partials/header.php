@@ -43,6 +43,9 @@ $halaman = $halaman ?? '';
           <li class="nav-item">
             <a class="nav-link <?= $halaman === 'panduan' ? 'active' : '' ?>" href="panduan.php">Panduan</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link <?= $halaman === 'profil' ? 'active' : '' ?>" href="profil.php">Profil Tim</a>
+          </li>
         </ul>
       </div>
     </div>
