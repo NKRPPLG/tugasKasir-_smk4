@@ -9,10 +9,11 @@ require __DIR__ . '/partials/header.php';
   <h1 class="display-6 fw-bold">KasirSMK</h1>
   <p class="lead mb-3">
     Proyek CRUD Toko Maju Jaya memakai PHP natif, MySQLi, dan Bootstrap.
-    Modul produk dan pembelian sudah lengkap sebagai contoh. Tugasmu
-    melengkapi modul kasir, supplier, dan penjualan.
+    Modul produk dan pembelian sudah lengkap sebagai contoh. Modul kasir
+    sudah mendukung daftar dan tambah; lanjutkan dengan edit dan nonaktifkan.
   </p>
   <a class="btn btn-warning fw-semibold" href="panduan.php">Buka Panduan</a>
+  <a class="btn btn-success fw-semibold" href="nature-demo.html" target="_blank">🌿 3D Nature Demo</a>
   <a class="btn btn-outline-light" href="checklist.php">Checklist Proyek</a>
   <a class="btn btn-outline-light" href="presentasi.php">Mode Presentasi</a>
   <a class="btn btn-outline-light" href="pembelian.php">Contoh Pembelian</a>
@@ -44,10 +45,13 @@ require __DIR__ . '/partials/header.php';
         <span class="badge text-bg-warning align-self-start mb-2">Contoh + Tugas</span>
         <h2 class="h4">Kasir</h2>
         <p class="text-secondary flex-grow-1">
-          Daftar kasir dan contoh form sudah tersedia. Tugasmu melengkapi proses
-          simpan, edit, dan nonaktifkan.
+          Lihat daftar kasir dan tambahkan kasir baru. Selanjutnya, data kasir
+          bisa diedit atau dinonaktifkan tanpa menghapus riwayat transaksi.
         </p>
-        <a class="btn btn-outline-primary" href="kasir.php">Buka Kasir</a>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-primary" href="kasir.php">Buka Daftar Kasir</a>
+          <a class="btn btn-outline-primary" href="kasir_tambah.php">Tambah Kasir</a>
+        </div>
       </div>
     </div>
   </div>
@@ -125,7 +129,7 @@ require __DIR__ . '/partials/header.php';
       <div class="card-body">
         <ol class="mb-0">
           <li class="mb-2">Pelajari penjelasan produk per form, lalu coba hasil akhirnya.</li>
-          <li class="mb-2">Baca brief kasir di panduan, lalu isi file tugas kasir.</li>
+          <li class="mb-2">Selesaikan CRUD kasir: tambah, edit, lalu nonaktifkan tanpa menghapus.</li>
           <li class="mb-2">Baca brief supplier, lalu isi file tugas supplier.</li>
           <li class="mb-2">Pelajari contoh pembelian: nota, detail, dan stok masuk.</li>
           <li class="mb-2">Kerjakan penjualan: cek stok, simpan nota, dan stok keluar.</li>

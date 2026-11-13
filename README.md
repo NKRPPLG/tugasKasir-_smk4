@@ -36,8 +36,8 @@ kasirsmk/
 ├── produk_tambah.php       # CREATE
 ├── produk_edit.php         # UPDATE
 ├── produk_hapus.php        # DELETE
-├── kasir.php               # CONTOH: daftar kasir
-├── kasir_tambah.php        # CONTOH: form tanpa tombol simpan
+├── kasir.php               # daftar kasir + aksi
+├── kasir_tambah.php        # tambah kasir
 ├── kasir_edit.php          # TUGAS: edit kasir
 ├── kasir_nonaktifkan.php   # TUGAS: soft delete kasir
 ├── supplier.php            # TUGAS: daftar supplier
@@ -76,8 +76,8 @@ disimpan sebagai PDF.
 3. Coba **Hasil Akhir Produk**: daftar, cari, tambah, edit, dan hapus.
 4. Perhatikan jQuery di `assets/produk.js`: huruf besar, counter nama, laba,
    validasi, konfirmasi hapus, dan anti klik ganda.
-5. Buka **Kasir**: daftar sudah tersedia dan `kasir_tambah.php` berisi contoh
-   form tanpa tombol simpan.
+5. Buka **Kasir** untuk melihat daftar dan mencoba tambah kasir. Edit dan
+   nonaktifkan kasir tetap menjadi langkah lanjutan.
 6. Buka **Pembelian**: contoh transaksi lengkap (nota, detail, stok masuk).
 7. Baca **Tugas Kasir**, **Tugas Supplier**, dan **Tugas Penjualan**, lalu
    lengkapi file tugas.

@@ -515,18 +515,18 @@ WHERE kode_produk = ?</code></pre>
         <div class="slide-head">
           <span class="slide-kicker">Tugas 1</span>
           <h2>Modul kasir: lengkapi, bukan ulang</h2>
-          <p>Daftar dan contoh form sudah tersedia. Fokusmu ada pada proses simpan, edit, dan nonaktifkan.</p>
+          <p>Daftar dan proses tambah sudah tersedia. Fokus berikutnya: edit dan nonaktifkan tanpa menghapus riwayat.</p>
         </div>
 
         <div class="split-layout">
           <div class="file-list">
             <div class="file-row">
               <code>kasir.php</code>
-              <span>Contoh daftar + badge status.</span>
+              <span>Daftar kasir + badge status.</span>
             </div>
             <div class="file-row">
               <code>kasir_tambah.php</code>
-              <span>Form contoh tanpa tombol simpan.</span>
+              <span>Form tambah dengan validasi dan proses simpan.</span>
             </div>
             <div class="file-row">
               <code>kasir_edit.php</code>
