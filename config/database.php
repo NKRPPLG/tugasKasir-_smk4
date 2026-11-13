@@ -10,7 +10,7 @@ mysqli_report(MYSQLI_REPORT_OFF);
 const DB_HOST = 'localhost';
 const DB_USER = 'root';
 const DB_PASS = '';
-const DB_NAME = 'db_penjualan';
+const DB_NAME = 'penjualan_lengkap';
 
 $koneksi = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 

@@ -31,6 +31,13 @@ foreach ($daftarKasir as $kasir) {
     }
 }
 
+$pesanStatus = [
+    'tambah'   => ['success', 'Kasir baru berhasil ditambahkan.'],
+    'edit'     => ['success', 'Data kasir berhasil diperbarui.'],
+    'nonaktif' => ['warning', 'Kasir berhasil dinonaktifkan.'],
+];
+$status = $_GET['status'] ?? '';
+
 $judul = 'Daftar Kasir';
 $halaman = 'kasir';
 require __DIR__ . '/partials/header.php';
@@ -38,13 +45,12 @@ require __DIR__ . '/partials/header.php';
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
   <div>
-    <span class="badge text-bg-warning mb-2">Contoh READ</span>
+    <span class="badge text-bg-success mb-2">Master Data</span>
     <h1 class="h3 mb-1">Daftar Kasir</h1>
-    <p class="text-secondary mb-0">Contoh menampilkan data dari tabel <code>kasir</code>.</p>
+    <p class="text-secondary mb-0">Manajemen akun kasir bertugas &middot; database <code>db_penjualan</code></p>
   </div>
   <div class="d-flex gap-2">
-    <a class="btn btn-primary" href="kasir_tambah.php">Lihat Contoh Form</a>
-    <a class="btn btn-outline-secondary" href="panduan.php#tugas-kasir">Brief Tugas</a>
+    <a class="btn btn-primary" href="kasir_tambah.php">+ Tambah Kasir</a>
   </div>
 </div>
 
@@ -55,11 +61,18 @@ require __DIR__ . '/partials/header.php';
   </div>
 <?php endif; ?>
 
+<?php if (isset($pesanStatus[$status])): ?>
+  <div class="alert alert-<?= $pesanStatus[$status][0] ?> alert-dismissible fade show" role="alert">
+    <?= htmlspecialchars($pesanStatus[$status][1]) ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<?php endif; ?>
+
 <div class="row g-3 mb-4">
   <div class="col-md-4">
     <div class="card h-100">
       <div class="card-body">
-        <div class="text-secondary small">Jumlah Kasir</div>
+        <div class="text-secondary small">Total Kasir</div>
         <div class="fs-3 fw-bold"><?= $jumlahKasir ?></div>
       </div>
     </div>
@@ -67,7 +80,7 @@ require __DIR__ . '/partials/header.php';
   <div class="col-md-4">
     <div class="card h-100">
       <div class="card-body">
-        <div class="text-secondary small">Aktif</div>
+        <div class="text-secondary small">Kasir Aktif</div>
         <div class="fs-3 fw-bold text-success"><?= $jumlahAktif ?></div>
       </div>
     </div>
@@ -114,22 +127,20 @@ require __DIR__ . '/partials/header.php';
               <td>
                 <?= $kasir['tanggal_keluar'] ? htmlspecialchars($kasir['tanggal_keluar']) : '-' ?>
               </td>
-              <td class="text-end text-secondary small">Tugas siswa</td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-primary" href="kasir_edit.php?id_kasir=<?= (int) $kasir['id_kasir'] ?>">Edit</a>
+                <?php if ($kasir['status'] === 'aktif'): ?>
+                  <a class="btn btn-sm btn-outline-danger" href="kasir_nonaktifkan.php?id_kasir=<?= (int) $kasir['id_kasir'] ?>">Nonaktifkan</a>
+                <?php else: ?>
+                  <button class="btn btn-sm btn-outline-secondary" disabled>Nonaktif</button>
+                <?php endif; ?>
+              </td>
             </tr>
           <?php endforeach; ?>
         <?php endif; ?>
       </tbody>
     </table>
   </div>
-</div>
-
-<div class="alert alert-info">
-  <strong>Ini contoh READ.</strong> Tugasmu:
-  <ul class="mb-0 mt-2">
-    <li>Lengkapi proses simpan pada <code>kasir_tambah.php</code>.</li>
-    <li>Buat <code>kasir_edit.php</code>.</li>
-    <li>Buat <code>kasir_nonaktifkan.php</code> dengan soft delete.</li>
-  </ul>
 </div>
 
 <?php require __DIR__ . '/partials/footer.php'; ?>

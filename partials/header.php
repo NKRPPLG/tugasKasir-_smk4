@@ -34,11 +34,9 @@ $halaman = $halaman ?? '';
           <li class="nav-item">
             <a class="nav-link <?= $halaman === 'penjualan' ? 'active' : '' ?>" href="penjualan.php">Penjualan</a>
           </li>
-          <!-- Supplier disembunyikan sampai tugas selesai.
           <li class="nav-item">
             <a class="nav-link <?= $halaman === 'supplier' ? 'active' : '' ?>" href="supplier.php">Supplier</a>
           </li>
-          -->
           <li class="nav-item">
             <a class="nav-link <?= $halaman === 'checklist' ? 'active' : '' ?>" href="checklist.php">Checklist</a>
           </li>

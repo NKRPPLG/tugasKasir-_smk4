@@ -1,55 +1,121 @@
 <?php
-$judul = 'Contoh Form Kasir';
+require __DIR__ . '/config/database.php';
+
+$error = [];
+$namaKasir = '';
+$status = 'aktif';
+$tanggalKeluar = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $namaKasir = trim($_POST['nama_kasir'] ?? '');
+    $status = trim($_POST['status'] ?? 'aktif');
+    $tanggalKeluar = trim($_POST['tanggal_keluar'] ?? '');
+
+    if ($namaKasir === '') {
+        $error[] = 'Nama kasir wajib diisi.';
+    } elseif (mb_strlen($namaKasir) > 50) {
+        $error[] = 'Nama kasir maksimal 50 karakter.';
+    }
+
+    if ($status !== 'aktif' && $status !== 'nonaktif') {
+        $status = 'aktif';
+    }
+
+    $tglSimpan = null;
+    if ($status === 'nonaktif') {
+        if ($tanggalKeluar !== '') {
+            $tglObj = DateTime::createFromFormat('Y-m-d', $tanggalKeluar);
+            if ($tglObj && $tglObj->format('Y-m-d') === $tanggalKeluar) {
+                $tglSimpan = $tanggalKeluar;
+            } else {
+                $tglSimpan = date('Y-m-d');
+            }
+        } else {
+            $tglSimpan = date('Y-m-d');
+        }
+    }
+
+    if (count($error) === 0) {
+        $stmt = mysqli_prepare(
+            $koneksi,
+            'INSERT INTO kasir (nama_kasir, status, tanggal_keluar) VALUES (?, ?, ?)'
+        );
+
+        if (!$stmt) {
+            $error[] = 'Gagal menyiapkan query: ' . mysqli_error($koneksi);
+        } else {
+            mysqli_stmt_bind_param($stmt, 'sss', $namaKasir, $status, $tglSimpan);
+
+            if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_close($stmt);
+                header('Location: kasir.php?status=tambah');
+                exit;
+            }
+
+            $error[] = 'Gagal menyimpan kasir: ' . mysqli_stmt_error($stmt);
+            mysqli_stmt_close($stmt);
+        }
+    }
+}
+
+$judul = 'Tambah Kasir';
 $halaman = 'kasir';
 require __DIR__ . '/partials/header.php';
 ?>
 
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
   <div>
-    <span class="badge text-bg-warning mb-2">Contoh Form</span>
-    <h1 class="h3 mb-1">Form Tambah Kasir</h1>
+    <span class="badge text-bg-success mb-2">CREATE</span>
+    <h1 class="h3 mb-1">Tambah Kasir Baru</h1>
     <p class="text-secondary mb-0">
-      Ini contoh tampilan form. Proses simpan belum disediakan.
+      Masukkan data kasir yang bertugas di Toko Maju Jaya.
     </p>
   </div>
   <a class="btn btn-outline-secondary" href="kasir.php">Kembali ke Daftar Kasir</a>
 </div>
 
-<div class="alert alert-info">
-  <strong>Tugasmu:</strong> tambahkan tombol simpan, validasi, dan proses
-  <code>INSERT</code> ke tabel <code>kasir</code>. Contoh lengkap ada di
-  <code>produk_tambah.php</code>.
-</div>
+<?php if (count($error) > 0): ?>
+  <div class="alert alert-danger">
+    <strong>Kasir belum bisa disimpan:</strong>
+    <ul class="mb-0 mt-2">
+      <?php foreach ($error as $pesan): ?>
+        <li><?= htmlspecialchars($pesan) ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+<?php endif; ?>
 
-<div class="card">
+<div class="card mb-4">
   <div class="card-body">
     <form method="post" action="kasir_tambah.php">
       <div class="row g-3">
         <div class="col-md-6">
-          <label class="form-label" for="nama_kasir">Nama Kasir</label>
+          <label class="form-label" for="nama_kasir">Nama Kasir <span class="text-danger">*</span></label>
           <input class="form-control" type="text" id="nama_kasir" name="nama_kasir"
-                 maxlength="50" placeholder="Contoh: Rina" required>
+                 maxlength="50" placeholder="Contoh: Rina"
+                 value="<?= htmlspecialchars($namaKasir) ?>" required autofocus>
           <div class="form-text">Wajib diisi, maksimal 50 karakter.</div>
         </div>
 
         <div class="col-md-3">
           <label class="form-label" for="status">Status</label>
           <select class="form-select" id="status" name="status">
-            <option value="aktif" selected>Aktif</option>
-            <option value="nonaktif">Nonaktif</option>
+            <option value="aktif" <?= $status === 'aktif' ? 'selected' : '' ?>>Aktif</option>
+            <option value="nonaktif" <?= $status === 'nonaktif' ? 'selected' : '' ?>>Nonaktif</option>
           </select>
         </div>
 
         <div class="col-md-3">
           <label class="form-label" for="tanggal_keluar">Tanggal Keluar</label>
-          <input class="form-control" type="date" id="tanggal_keluar" name="tanggal_keluar">
-          <div class="form-text">Kosongkan jika masih aktif.</div>
+          <input class="form-control" type="date" id="tanggal_keluar" name="tanggal_keluar"
+                 value="<?= htmlspecialchars($tanggalKeluar) ?>">
+          <div class="form-text">Kosongkan jika kasir masih aktif.</div>
         </div>
       </div>
 
-      <div class="alert alert-secondary mt-4 mb-0">
-        Tombol <strong>Simpan</strong> belum dibuat. Siswa melengkapi bagian ini
-        sesuai brief di <a href="panduan.php#tugas-kasir">panduan kasir</a>.
+      <div class="d-flex gap-2 mt-4">
+        <button class="btn btn-primary" type="submit">Simpan Kasir</button>
+        <a class="btn btn-outline-secondary" href="kasir.php">Batal</a>
       </div>
     </form>
   </div>
