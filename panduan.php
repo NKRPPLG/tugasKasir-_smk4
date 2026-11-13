@@ -9,12 +9,14 @@ require __DIR__ . '/partials/header.php';
   <h1 class="display-6 fw-bold">Proyek KasirSMK</h1>
   <p class="lead mb-3">
     Panduan lengkap untuk memahami contoh CRUD produk langkah demi langkah,
-    termasuk jQuery, lalu melengkapi modul kasir dan supplier. Semua materi
+    termasuk jQuery, lalu melengkapi modul kasir, supplier, dan penjualan.
+    Contoh pembelian sudah selesai dan bisa dipakai sebagai acuan. Semua materi
     bisa dibaca langsung di web tanpa slide.
   </p>
   <a class="btn btn-warning fw-semibold" href="#produk">Mulai Penjelasan Produk</a>
   <a class="btn btn-outline-light" href="presentasi.php">Mode Presentasi</a>
-  <a class="btn btn-outline-light" href="#hasil-produk">Lihat Hasil Akhir</a>
+  <a class="btn btn-outline-light" href="#alur-pembelian">Alur Pembelian</a>
+  <a class="btn btn-outline-light" href="#tugas-penjualan">Tugas Penjualan</a>
   <a class="btn btn-outline-light" href="#tugas-kasir">Brief Kasir</a>
   <a class="btn btn-outline-light" href="#tugas-supplier">Brief Supplier</a>
 </div>
@@ -35,6 +37,8 @@ require __DIR__ . '/partials/header.php';
       <a class="btn btn-sm btn-outline-primary" href="#hasil-produk">Hasil Akhir</a>
       <a class="btn btn-sm btn-outline-primary" href="#tugas-kasir">Tugas Kasir</a>
       <a class="btn btn-sm btn-outline-primary" href="#tugas-supplier">Tugas Supplier</a>
+      <a class="btn btn-sm btn-outline-primary" href="#alur-pembelian">Alur Pembelian</a>
+      <a class="btn btn-sm btn-outline-primary" href="#tugas-penjualan">Tugas Penjualan</a>
       <a class="btn btn-sm btn-outline-primary" href="#checklist">Checklist</a>
       <a class="btn btn-sm btn-outline-primary" href="#kesalahan">Kesalahan Umum</a>
     </div>
@@ -50,10 +54,11 @@ require __DIR__ . '/partials/header.php';
 <div class="alert alert-info">
   <strong>Penting:</strong> <code>kasir.php</code> dan
   <code>kasir_tambah.php</code> sudah berisi contoh daftar dan contoh form
-  tanpa tombol simpan. File <code>kasir_edit.php</code>,
-  <code>kasir_nonaktifkan.php</code>, dan seluruh <code>supplier*.php</code>
-  masih kosong dan hanya berisi komentar petunjuk. Buka file tersebut di editor
-  kode untuk membaca brief tugasnya.
+  tanpa tombol simpan. Modul <code>pembelian*.php</code> sudah selesai dan
+  menjadi acuan. File <code>kasir_edit.php</code>,
+  <code>kasir_nonaktifkan.php</code>, seluruh <code>supplier*.php</code>, dan
+  <code>penjualan*.php</code> masih berupa kerangka tugas. Buka file tersebut
+  di editor kode untuk membaca brief tugasnya.
 </div>
 
 <section id="peta-folder" class="card mb-4 anchor-target">
@@ -62,13 +67,16 @@ require __DIR__ . '/partials/header.php';
     <pre class="bg-dark text-light p-3 rounded code-block"><code>smk4/kasirsmk/
 ├── partials/
 │   ├── header.php          # Bootstrap navbar, CSS, pembuka container
-│   └── footer.php          # penutup container, footer, JS Bootstrap
+│   └── footer.php          # penutup container, footer, JS Bootstrap/jQuery
 ├── config/
 │   └── database.php        # koneksi ke db_penjualan
 ├── assets/
 │   ├── bootstrap/
 │   │   ├── css/bootstrap.min.css
 │   │   └── js/bootstrap.bundle.min.js
+│   ├── jquery/             # jQuery 3.7.1 lokal
+│   ├── produk.js           # jQuery modul produk
+│   ├── transaksi.js        # jQuery form transaksi (baris + total)
 │   └── style.css
 ├── index.php               # dashboard proyek
 ├── panduan.php             # halaman ini
@@ -84,6 +92,13 @@ require __DIR__ . '/partials/header.php';
 ├── supplier_tambah.php     # TUGAS: tambah supplier
 ├── supplier_edit.php       # TUGAS: edit supplier
 ├── supplier_hapus.php      # TUGAS: hapus supplier + cek pemakaian
+├── transaksi_helper.php    # fungsi bantu transaksi
+├── pembelian.php           # CONTOH: daftar pembelian
+├── pembelian_tambah.php    # CONTOH: form multi-baris + stok masuk
+├── pembelian_detail.php    # CONTOH: nota + dampak stok
+├── penjualan.php           # TUGAS: brief + daftar penjualan
+├── penjualan_tambah.php    # TUGAS: kerangka form + stok keluar
+├── penjualan_detail.php    # TUGAS: kerangka nota penjualan
 └── README.md</code></pre>
     <p class="mb-0 text-secondary">
       Semua halaman berada di root proyek agar path
@@ -154,6 +169,21 @@ require __DIR__ . '/partials/header.php';
             <td><code>no_pembelian</code></td>
             <td><code>id_kasir</code>, <code>id_supplier</code>, <code>tanggal</code></td>
           </tr>
+          <tr>
+            <td><code>detail_pembelian</code></td>
+            <td><code>id_detail</code> (auto increment)</td>
+            <td><code>no_pembelian</code>, <code>kode_produk</code>, <code>nama_produk</code>, <code>jumlah</code>, <code>harga_beli</code></td>
+          </tr>
+          <tr>
+            <td><code>detail_penjualan</code></td>
+            <td><code>id_detail</code> (auto increment)</td>
+            <td><code>no_penjualan</code>, <code>kode_produk</code>, <code>nama_produk</code>, <code>jumlah</code>, <code>harga_satuan</code></td>
+          </tr>
+          <tr>
+            <td><code>stok</code></td>
+            <td><code>id_stok</code> (auto increment)</td>
+            <td><code>kode_produk</code>, <code>jumlah_masuk</code>, <code>jumlah_keluar</code>, <code>saldo_awal</code>, <code>saldo_akhir</code>, <code>no_pembelian</code>, <code>no_penjualan</code></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -161,6 +191,8 @@ require __DIR__ . '/partials/header.php';
       <strong>Perhatikan:</strong> tabel <code>kasir</code> memakai
       <code>status</code> dan <code>tanggal_keluar</code>. Kasir yang keluar
       tidak dihapus, tetapi dinonaktifkan agar riwayat transaksi tetap utuh.
+      Tabel <code>detail_*</code> menyimpan snapshot nama dan harga, sedangkan
+      <code>stok</code> menyimpan riwayat saldo.
     </div>
   </div>
 </section>
@@ -906,8 +938,166 @@ WHERE id_supplier = ?</code></pre>
   </div>
 </section>
 
+<section id="alur-pembelian" class="card mb-4 anchor-target">
+  <div class="card-header bg-white fw-semibold">9. Alur Pembelian (Contoh Selesai)</div>
+  <div class="card-body">
+    <p>
+      Modul pembelian adalah contoh lengkap transaksi barang masuk. Polanya
+      dipakai lagi untuk penjualan, hanya arah stok yang dibalik.
+    </p>
+
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered table-sm align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>File</th>
+            <th>Isi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="pembelian.php"><code>pembelian.php</code></a></td>
+            <td>Daftar nota + pencarian + statistik. Total dari <code>SUM(detail)</code>.</td>
+          </tr>
+          <tr>
+            <td><a href="pembelian_tambah.php"><code>pembelian_tambah.php</code></a></td>
+            <td>Form multi-baris, validasi, transaksi database, stok masuk.</td>
+          </tr>
+          <tr>
+            <td><a href="pembelian_detail.php?no=PB-0001"><code>pembelian_detail.php</code></a></td>
+            <td>Nota + isi + mutasi stok masuk.</td>
+          </tr>
+          <tr>
+            <td><code>transaksi_helper.php</code></td>
+            <td><code>rupiah()</code>, <code>saldo_stok_terakhir()</code>, <code>buat_nomor()</code>.</td>
+          </tr>
+          <tr>
+            <td><code>assets/transaksi.js</code></td>
+            <td>Tambah/hapus baris, isi harga, hitung subtotal dan total.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="h5">Urutan Simpan</h3>
+    <ol>
+      <li>Validasi tanggal, kasir, supplier, dan semua baris barang.</li>
+      <li><code>mysqli_begin_transaction($koneksi);</code></li>
+      <li>Buat nomor: <code>buat_nomor($koneksi, 'PB-', 'pembelian', 'no_pembelian')</code>.</li>
+      <li>INSERT kepala nota ke <code>pembelian</code>.</li>
+      <li>Per barang: INSERT <code>detail_pembelian</code> + INSERT <code>stok</code>.</li>
+      <li><code>mysqli_commit($koneksi);</code> lalu redirect ke halaman detail.</li>
+      <li>Jika ada error: <code>mysqli_rollback($koneksi);</code></li>
+    </ol>
+
+    <h3 class="h5 mt-4">Kode Inti: Stok Masuk</h3>
+    <pre class="bg-dark text-light p-3 rounded code-block"><code>$saldoAwal  = saldo_stok_terakhir($koneksi, $kodeProduk);
+$saldoAkhir = $saldoAwal + $jumlah;
+
+INSERT INTO stok
+  (kode_produk, tanggal, jumlah_masuk, jumlah_keluar,
+   saldo_awal, saldo_akhir, no_penjualan, no_pembelian, keterangan)
+VALUES
+  (?, ?, ?, 0, ?, ?, NULL, ?, 'Beli dari supplier')</code></pre>
+
+    <h3 class="h5 mt-4">Kode Inti: Detail</h3>
+    <pre class="bg-dark text-light p-3 rounded code-block"><code>INSERT INTO detail_pembelian
+  (no_pembelian, kode_produk, nama_produk, jumlah, harga_beli)
+VALUES (?, ?, ?, ?, ?)</code></pre>
+
+    <div class="alert alert-success mb-0">
+      <strong>Snapshot:</strong> <code>nama_produk</code> dan
+      <code>harga_beli</code> disalin ke detail. Jadi nota lama tidak berubah
+      walaupun data produk diedit kemudian.
+    </div>
+  </div>
+</section>
+
+<section id="tugas-penjualan" class="card mb-4 anchor-target task-card">
+  <div class="card-header bg-white fw-semibold">10. Tugas Penjualan</div>
+  <div class="card-body">
+    <div class="alert alert-warning">
+      <strong>Tugas:</strong> lengkapi modul penjualan (barang keluar).
+      Kerangka file dan langkah rinci sudah tersedia di komentar file.
+      Gunakan <code>pembelian*.php</code> sebagai contoh terdekat.
+    </div>
+
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered table-sm align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>File</th>
+            <th>Tugas</th>
+            <th>Contoh</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>penjualan.php</code></td>
+            <td>Ganti brief dengan daftar nota + pencarian + statistik.</td>
+            <td><code>pembelian.php</code></td>
+          </tr>
+          <tr>
+            <td><code>penjualan_tambah.php</code></td>
+            <td>Lengkapi form multi-baris, validasi, cek stok, INSERT, redirect.</td>
+            <td><code>pembelian_tambah.php</code></td>
+          </tr>
+          <tr>
+            <td><code>penjualan_detail.php</code></td>
+            <td>Buat nota + isi + mutasi stok keluar.</td>
+            <td><code>pembelian_detail.php</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="h5">Urutan Wajib</h3>
+    <ol>
+      <li>Ambil kasir aktif dan produk beserta stok terakhir.</li>
+      <li>Validasi tanggal, kasir, metode bayar, dan setiap baris.</li>
+      <li>Cek stok sebelum menyimpan.</li>
+      <li><code>begin_transaction</code>, lalu buat nomor <code>PJ-0001</code>.</li>
+      <li>INSERT <code>penjualan</code> + <code>detail_penjualan</code> + <code>stok</code> keluar.</li>
+      <li><code>commit</code>, lalu buka <code>penjualan_detail.php?no=...</code>.</li>
+    </ol>
+
+    <h3 class="h5 mt-4">Kode Inti: Cek Stok</h3>
+    <pre class="bg-dark text-light p-3 rounded code-block"><code>$stokTersedia = saldo_stok_terakhir($koneksi, $kodeProduk);
+
+if ($jumlahDijual &gt; $stokTersedia) {
+    $error[] = 'Stok tidak cukup. Tersedia ' . $stokTersedia;
+}</code></pre>
+
+    <h3 class="h5 mt-4">Kode Inti: Stok Keluar</h3>
+    <pre class="bg-dark text-light p-3 rounded code-block"><code>$saldoAwal  = saldo_stok_terakhir($koneksi, $kodeProduk);
+$saldoAkhir = $saldoAwal - $jumlah;
+
+INSERT INTO stok
+  (kode_produk, tanggal, jumlah_masuk, jumlah_keluar,
+   saldo_awal, saldo_akhir, no_penjualan, no_pembelian, keterangan)
+VALUES
+  (?, ?, 0, ?, ?, ?, ?, NULL, 'Jual ke pembeli')</code></pre>
+
+    <h3 class="h5 mt-4">Checklist Penjualan</h3>
+    <ul class="mb-0">
+      <li>Daftar penjualan tampil dan pencarian berfungsi.</li>
+      <li>Form bisa menambah lebih dari satu barang.</li>
+      <li>Harga satuan otomatis dari <code>produk.harga_jual</code>.</li>
+      <li>Stok tidak cukup ditolak dengan pesan jelas.</li>
+      <li>Setelah simpan: stok berkurang dan nota tampil.</li>
+      <li>Semua query berinput memakai prepared statement.</li>
+      <li>Semua output memakai <code>htmlspecialchars</code>.</li>
+    </ul>
+
+    <div class="d-flex flex-wrap gap-2 mt-3">
+      <a class="btn btn-primary" href="penjualan.php">Buka Brief Penjualan</a>
+      <a class="btn btn-outline-primary" href="pembelian_tambah.php">Lihat Contoh Form</a>
+    </div>
+  </div>
+</section>
+
 <section id="checklist" class="card mb-4 anchor-target">
-  <div class="card-header bg-white fw-semibold">9. Checklist dan Rubrik</div>
+  <div class="card-header bg-white fw-semibold">11. Checklist dan Rubrik</div>
   <div class="card-body">
     <div class="row g-4">
       <div class="col-lg-7">
@@ -918,6 +1108,8 @@ WHERE id_supplier = ?</code></pre>
           <li>Edit data menyimpan perubahan dengan benar.</li>
           <li>Kasir memakai nonaktif, bukan hapus permanen.</li>
           <li>Supplier tidak bisa dihapus jika sudah dipakai di pembelian.</li>
+          <li>Penjualan menolak jumlah yang melebihi stok.</li>
+          <li>Pembelian dan penjualan memakai transaksi database.</li>
           <li>Semua input divalidasi di server.</li>
           <li>Semua query berinput memakai prepared statement.</li>
           <li>Semua output memakai <code>htmlspecialchars</code>.</li>
@@ -957,7 +1149,7 @@ WHERE id_supplier = ?</code></pre>
 </section>
 
 <section id="kesalahan" class="card mb-4 anchor-target">
-  <div class="card-header bg-white fw-semibold">10. Kesalahan Umum</div>
+  <div class="card-header bg-white fw-semibold">12. Kesalahan Umum</div>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered table-sm mb-0">
@@ -1004,6 +1196,16 @@ WHERE id_supplier = ?</code></pre>
             <td>Relasi pembelian hilang.</td>
             <td>Cek tabel <code>pembelian</code> sebelum DELETE.</td>
           </tr>
+          <tr>
+            <td>Tidak mengecek stok saat menjual</td>
+            <td>Stok bisa minus dan saldo kacau.</td>
+            <td>Bandingkan jumlah jual dengan <code>saldo_stok_terakhir()</code>.</td>
+          </tr>
+          <tr>
+            <td>Lupa <code>commit</code>/<code>rollback</code></td>
+            <td>Data tidak tersimpan atau tertahan.</td>
+            <td>Bungkus INSERT kepala + detail + stok dalam transaksi.</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -1012,8 +1214,10 @@ WHERE id_supplier = ?</code></pre>
 
 <div class="d-flex flex-wrap gap-2 mb-4">
   <a class="btn btn-primary" href="produk.php">Buka Contoh Produk</a>
+  <a class="btn btn-outline-primary" href="pembelian.php">Contoh Pembelian</a>
   <a class="btn btn-outline-primary" href="#tugas-kasir">Brief Kasir</a>
   <a class="btn btn-outline-primary" href="#tugas-supplier">Brief Supplier</a>
+  <a class="btn btn-outline-primary" href="#tugas-penjualan">Brief Penjualan</a>
   <a class="btn btn-outline-secondary" href="index.php">Kembali ke Dashboard</a>
 </div>
 

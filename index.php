@@ -9,12 +9,14 @@ require __DIR__ . '/partials/header.php';
   <h1 class="display-6 fw-bold">KasirSMK</h1>
   <p class="lead mb-3">
     Proyek CRUD Toko Maju Jaya memakai PHP natif, MySQLi, dan Bootstrap.
-    Modul produk sudah lengkap sebagai contoh. Tugasmu melengkapi modul kasir
-    dan supplier.
+    Modul produk dan pembelian sudah lengkap sebagai contoh. Tugasmu
+    melengkapi modul kasir, supplier, dan penjualan.
   </p>
   <a class="btn btn-warning fw-semibold" href="panduan.php">Buka Panduan</a>
+  <a class="btn btn-outline-light" href="checklist.php">Checklist Proyek</a>
   <a class="btn btn-outline-light" href="presentasi.php">Mode Presentasi</a>
-  <a class="btn btn-outline-light" href="panduan.php#produk">Penjelasan Produk</a>
+  <a class="btn btn-outline-light" href="pembelian.php">Contoh Pembelian</a>
+  <a class="btn btn-outline-light" href="penjualan.php">Tugas Penjualan</a>
   <a class="btn btn-outline-light" href="produk.php">Lihat Hasil Produk</a>
 </div>
 
@@ -79,6 +81,43 @@ require __DIR__ . '/partials/header.php';
   </div>
 </div>
 
+<div class="row g-4 mb-4">
+  <div class="col-md-6">
+    <div class="card h-100 done-card">
+      <div class="card-body d-flex flex-column">
+        <span class="badge text-bg-success align-self-start mb-2">Contoh selesai</span>
+        <h2 class="h4">Pembelian</h2>
+        <p class="text-secondary flex-grow-1">
+          Nota barang masuk: pilih supplier dan kasir, isi banyak barang,
+          simpan, lalu lihat stok bertambah.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-primary" href="pembelian.php">Buka Pembelian</a>
+          <a class="btn btn-outline-primary" href="pembelian_tambah.php">Coba Form</a>
+          <a class="btn btn-outline-secondary" href="panduan.php#alur-pembelian">Penjelasan</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card h-100 task-card">
+      <div class="card-body d-flex flex-column">
+        <span class="badge text-bg-warning align-self-start mb-2">Tugas P16</span>
+        <h2 class="h4">Penjualan</h2>
+        <p class="text-secondary flex-grow-1">
+          Barang keluar: cek stok, simpan nota, dan kurangi stok. Kerangka file
+          serta brief lengkap sudah disiapkan.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-outline-primary" href="penjualan.php">Baca Brief</a>
+          <a class="btn btn-outline-secondary" href="panduan.php#tugas-penjualan">Panduan</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row g-4">
   <div class="col-lg-7">
     <div class="card h-100">
@@ -88,6 +127,8 @@ require __DIR__ . '/partials/header.php';
           <li class="mb-2">Pelajari penjelasan produk per form, lalu coba hasil akhirnya.</li>
           <li class="mb-2">Baca brief kasir di panduan, lalu isi file tugas kasir.</li>
           <li class="mb-2">Baca brief supplier, lalu isi file tugas supplier.</li>
+          <li class="mb-2">Pelajari contoh pembelian: nota, detail, dan stok masuk.</li>
+          <li class="mb-2">Kerjakan penjualan: cek stok, simpan nota, dan stok keluar.</li>
           <li class="mb-2">Uji semua fitur dengan data nyata dari database.</li>
           <li>Presentasikan hasil proyek pada pertemuan showcase.</li>
         </ol>
@@ -107,11 +148,11 @@ require __DIR__ . '/partials/header.php';
             </tr>
             <tr>
               <th>Tabel contoh</th>
-              <td><code>produk</code></td>
+              <td><code>produk</code>, <code>pembelian</code></td>
             </tr>
             <tr>
               <th>Tugas</th>
-              <td><code>kasir</code>, <code>supplier</code></td>
+              <td><code>kasir</code>, <code>supplier</code>, <code>penjualan</code></td>
             </tr>
             <tr>
               <th>Tampilan</th>

@@ -28,11 +28,20 @@ $halaman = $halaman ?? '';
           <li class="nav-item">
             <a class="nav-link <?= $halaman === 'kasir' ? 'active' : '' ?>" href="kasir.php">Kasir</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link <?= $halaman === 'pembelian' ? 'active' : '' ?>" href="pembelian.php">Pembelian</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link <?= $halaman === 'penjualan' ? 'active' : '' ?>" href="penjualan.php">Penjualan</a>
+          </li>
           <!-- Supplier disembunyikan sampai tugas selesai.
           <li class="nav-item">
             <a class="nav-link <?= $halaman === 'supplier' ? 'active' : '' ?>" href="supplier.php">Supplier</a>
           </li>
           -->
+          <li class="nav-item">
+            <a class="nav-link <?= $halaman === 'checklist' ? 'active' : '' ?>" href="checklist.php">Checklist</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link <?= $halaman === 'panduan' ? 'active' : '' ?>" href="panduan.php">Panduan</a>
           </li>
