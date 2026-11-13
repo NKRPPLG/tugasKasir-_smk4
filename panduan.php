@@ -52,10 +52,10 @@ require __DIR__ . '/partials/header.php';
 </div>
 
 <div class="alert alert-info">
-  <strong>Penting:</strong> <code>kasir.php</code> dan
-  <code>kasir_tambah.php</code> sudah berisi contoh daftar dan contoh form
-  tanpa tombol simpan. Modul <code>pembelian*.php</code> sudah selesai dan
-  menjadi acuan. File <code>kasir_edit.php</code>,
+  <strong>Penting:</strong> <code>kasir.php</code> menampilkan daftar kasir
+  dan <code>kasir_tambah.php</code> sudah memvalidasi serta menyimpan kasir
+  baru. Modul <code>pembelian*.php</code> sudah selesai dan menjadi acuan.
+  File <code>kasir_edit.php</code>,
   <code>kasir_nonaktifkan.php</code>, seluruh <code>supplier*.php</code>, dan
   <code>penjualan*.php</code> masih berupa kerangka tugas. Buka file tersebut
   di editor kode untuk membaca brief tugasnya.
@@ -84,8 +84,8 @@ require __DIR__ . '/partials/header.php';
 ├── produk_tambah.php       # CREATE
 ├── produk_edit.php         # UPDATE
 ├── produk_hapus.php        # DELETE
-├── kasir.php               # CONTOH: daftar kasir
-├── kasir_tambah.php        # CONTOH: form tanpa simpan
+├── kasir.php               # daftar kasir
+├── kasir_tambah.php        # tambah kasir
 ├── kasir_edit.php          # TUGAS: edit kasir
 ├── kasir_nonaktifkan.php   # TUGAS: soft delete kasir
 ├── supplier.php            # TUGAS: daftar supplier
@@ -743,12 +743,12 @@ mysqli_stmt_bind_param($stmt, 'sddis', $nama, $hargaBeli, $hargaJual, $stok, $ko
         <tbody>
           <tr>
             <td><code>kasir.php</code></td>
-            <td>Contoh daftar kasir dan badge status. Tombol aksi belum dibuat.</td>
+            <td>Menampilkan daftar kasir, status, dan aksi yang tersedia.</td>
             <td><code>produk.php</code></td>
           </tr>
           <tr>
             <td><code>kasir_tambah.php</code></td>
-            <td>Contoh form tanpa tombol simpan. Tugas: tambahkan validasi, INSERT, redirect.</td>
+            <td>Validasi form, INSERT dengan prepared statement, lalu redirect ke daftar.</td>
             <td><code>produk_tambah.php</code></td>
           </tr>
           <tr>

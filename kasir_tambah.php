@@ -18,21 +18,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($status !== 'aktif' && $status !== 'nonaktif') {
-        $status = 'aktif';
+        $error[] = 'Status kasir tidak valid.';
     }
 
     $tglSimpan = null;
-    if ($status === 'nonaktif') {
-        if ($tanggalKeluar !== '') {
-            $tglObj = DateTime::createFromFormat('Y-m-d', $tanggalKeluar);
-            if ($tglObj && $tglObj->format('Y-m-d') === $tanggalKeluar) {
-                $tglSimpan = $tanggalKeluar;
-            } else {
-                $tglSimpan = date('Y-m-d');
-            }
-        } else {
-            $tglSimpan = date('Y-m-d');
+    if ($tanggalKeluar !== '') {
+        $tglObj = DateTime::createFromFormat('!Y-m-d', $tanggalKeluar);
+        $kesalahanTanggal = DateTime::getLastErrors();
+        if (
+            !$tglObj
+            || $tglObj->format('Y-m-d') !== $tanggalKeluar
+            || (
+                $kesalahanTanggal !== false
+                && ($kesalahanTanggal['warning_count'] > 0 || $kesalahanTanggal['error_count'] > 0)
+            )
+        ) {
+            $error[] = 'Tanggal keluar tidak valid.';
+        } elseif ($status === 'nonaktif') {
+            $tglSimpan = $tanggalKeluar;
         }
+    } elseif ($status === 'nonaktif') {
+        $tglSimpan = date('Y-m-d');
     }
 
     if (count($error) === 0) {
@@ -79,7 +85,7 @@ require __DIR__ . '/partials/header.php';
     <strong>Kasir belum bisa disimpan:</strong>
     <ul class="mb-0 mt-2">
       <?php foreach ($error as $pesan): ?>
-        <li><?= htmlspecialchars($pesan) ?></li>
+        <li><?= htmlspecialchars($pesan, ENT_QUOTES, 'UTF-8') ?></li>
       <?php endforeach; ?>
     </ul>
   </div>
@@ -93,13 +99,16 @@ require __DIR__ . '/partials/header.php';
           <label class="form-label" for="nama_kasir">Nama Kasir <span class="text-danger">*</span></label>
           <input class="form-control" type="text" id="nama_kasir" name="nama_kasir"
                  maxlength="50" placeholder="Contoh: Rina"
-                 value="<?= htmlspecialchars($namaKasir) ?>" required autofocus>
+                 value="<?= htmlspecialchars($namaKasir, ENT_QUOTES, 'UTF-8') ?>" required autofocus>
           <div class="form-text">Wajib diisi, maksimal 50 karakter.</div>
         </div>
 
         <div class="col-md-3">
           <label class="form-label" for="status">Status</label>
           <select class="form-select" id="status" name="status">
+            <?php if ($status !== 'aktif' && $status !== 'nonaktif'): ?>
+              <option value="" selected disabled>-- pilih status yang valid --</option>
+            <?php endif; ?>
             <option value="aktif" <?= $status === 'aktif' ? 'selected' : '' ?>>Aktif</option>
             <option value="nonaktif" <?= $status === 'nonaktif' ? 'selected' : '' ?>>Nonaktif</option>
           </select>
@@ -108,8 +117,8 @@ require __DIR__ . '/partials/header.php';
         <div class="col-md-3">
           <label class="form-label" for="tanggal_keluar">Tanggal Keluar</label>
           <input class="form-control" type="date" id="tanggal_keluar" name="tanggal_keluar"
-                 value="<?= htmlspecialchars($tanggalKeluar) ?>">
-          <div class="form-text">Kosongkan jika kasir masih aktif.</div>
+                 value="<?= htmlspecialchars($tanggalKeluar, ENT_QUOTES, 'UTF-8') ?>">
+          <div class="form-text">Digunakan untuk kasir nonaktif. Kosongkan jika masih aktif.</div>
         </div>
       </div>
 
