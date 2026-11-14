@@ -5,7 +5,7 @@ $error = [];
 $namaKasir = '';
 $status = 'aktif';
 $tanggalKeluar = '';
-
+// keykla pingin tes
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $namaKasir = trim($_POST['nama_kasir'] ?? '');
     $status = trim($_POST['status'] ?? 'aktif');
