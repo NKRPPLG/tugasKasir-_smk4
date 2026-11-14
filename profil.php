@@ -74,78 +74,58 @@ $anggota = [
 ];
 
 // Helper function untuk render SVG Avatar Formal secara offline
-function renderAvatarFormal(string $tipe): string {
+function renderAvatarFormal(string $tipe, int $size = 54): string {
+    $dim = 'width="' . $size . '" height="' . $size . '" style="width: 100%; height: 100%; display: block;"';
     switch ($tipe) {
         case 'male_suit_blue':
             // Pria jas navy, kemeja putih, dasi merah maroon
-            return '<svg viewBox="0 0 100 100" class="rounded-circle" width="96" height="96" style="border: 2px solid rgba(52, 211, 153, 0.4); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="50" fill="#0f172a"/>
-                <!-- Jas / Blazer -->
+            return '<svg viewBox="0 0 100 100" ' . $dim . ' xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="50" fill="#0b1726"/>
                 <path d="M18 100 L32 62 L42 62 L44 80 L35 100 Z" fill="#1e3a5f"/>
                 <path d="M82 100 L68 62 L58 62 L56 80 L65 100 Z" fill="#1e3a5f"/>
-                <!-- Bahu Jas -->
-                <path d="M20 100 Q20 70 35 60 L65 60 Q80 70 80 100 Z" fill="#0f172a"/>
-                <!-- Kemeja Putih -->
+                <path d="M20 100 Q20 70 35 60 L65 60 Q80 70 80 100 Z" fill="#0a192f"/>
                 <polygon points="42,60 58,60 55,82 45,82" fill="#ffffff"/>
-                <!-- Kerah Kemeja -->
                 <polygon points="42,60 48,70 50,60" fill="#cbd5e1"/>
                 <polygon points="58,60 52,70 50,60" fill="#cbd5e1"/>
-                <!-- Dasi Maroon -->
                 <polygon points="48,63 52,63 53,82 50,88 47,82" fill="#b91c1c"/>
-                <!-- Leher -->
                 <rect x="44" y="50" width="12" height="14" fill="#fed7aa" rx="2"/>
-                <!-- Kepala / Wajah -->
                 <ellipse cx="50" cy="40" rx="16" ry="19" fill="#fcd34d"/>
                 <ellipse cx="50" cy="41" rx="15" ry="18" fill="#fed7aa"/>
-                <!-- Rambut Rapi Formal -->
                 <path d="M33 37 Q33 21 50 20 Q67 21 67 37 Q63 28 50 27 Q37 28 33 37 Z" fill="#1e293b"/>
             </svg>';
 
         case 'male_suit_dark':
             // Pria jas charcoal, dasi teal
-            return '<svg viewBox="0 0 100 100" class="rounded-circle" width="96" height="96" style="border: 2px solid rgba(52, 211, 153, 0.4); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="50" fill="#0f172a"/>
-                <!-- Jas -->
+            return '<svg viewBox="0 0 100 100" ' . $dim . ' xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="50" fill="#091815"/>
                 <path d="M18 100 Q20 68 36 60 L64 60 Q80 68 82 100 Z" fill="#1e293b"/>
-                <!-- Kemeja Putih -->
                 <polygon points="41,60 59,60 55,84 45,84" fill="#ffffff"/>
-                <!-- Kerah Kemeja -->
                 <polygon points="41,60 47,71 50,60" fill="#e2e8f0"/>
                 <polygon points="59,60 53,71 50,60" fill="#e2e8f0"/>
-                <!-- Dasi Teal -->
                 <polygon points="48,64 52,64 53,84 50,90 47,84" fill="#10b981"/>
-                <!-- Leher -->
                 <rect x="44" y="50" width="12" height="14" fill="#fed7aa"/>
-                <!-- Kepala -->
                 <ellipse cx="50" cy="40" rx="15" ry="18" fill="#fed7aa"/>
-                <!-- Rambut Side-parted -->
                 <path d="M34 38 Q34 22 51 21 Q66 22 66 38 Q58 29 51 28 Q39 29 34 38 Z" fill="#334155"/>
             </svg>';
 
         case 'male_formal_tie':
             // Pria kemeja biru muda dasi navy
-            return '<svg viewBox="0 0 100 100" class="rounded-circle" width="96" height="96" style="border: 2px solid rgba(56, 189, 248, 0.4); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="50" fill="#0f172a"/>
-                <!-- Jas Abu-abu -->
+            return '<svg viewBox="0 0 100 100" ' . $dim . ' xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="50" fill="#0c1929"/>
                 <path d="M18 100 Q20 68 36 60 L64 60 Q80 68 82 100 Z" fill="#334155"/>
-                <!-- Kemeja Biru Muda -->
                 <polygon points="42,60 58,60 55,84 45,84" fill="#e0f2fe"/>
-                <!-- Kerah -->
                 <polygon points="42,60 47,70 50,60" fill="#bae6fd"/>
                 <polygon points="58,60 53,70 50,60" fill="#bae6fd"/>
-                <!-- Dasi -->
                 <polygon points="48,63 52,63 53,84 50,89 47,84" fill="#0284c7"/>
-                <!-- Leher & Wajah -->
                 <rect x="44" y="50" width="12" height="14" fill="#fcd34d" rx="2"/>
                 <ellipse cx="50" cy="40" rx="15" ry="18" fill="#fcd34d"/>
-                <!-- Rambut Cokelat Gelap -->
                 <path d="M34 36 Q34 20 50 19 Q66 20 66 36 Q60 28 50 27 Q38 28 34 36 Z" fill="#451a03"/>
             </svg>';
 
         case 'male_formal':
             // Pria formal blazer & dasi violet
-            return '<svg viewBox="0 0 100 100" class="rounded-circle" width="96" height="96" style="border: 2px solid rgba(167, 139, 250, 0.4); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="50" fill="#0f172a"/>
+            return '<svg viewBox="0 0 100 100" ' . $dim . ' xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="50" fill="#150f24"/>
                 <path d="M18 100 Q20 68 36 60 L64 60 Q80 68 82 100 Z" fill="#1e1b4b"/>
                 <polygon points="42,60 58,60 55,84 45,84" fill="#ffffff"/>
                 <polygon points="42,60 47,70 50,60" fill="#cbd5e1"/>
@@ -158,137 +138,106 @@ function renderAvatarFormal(string $tipe): string {
 
         case 'male_glasses':
             // Pria formal kacamata & dasi amber
-            return '<svg viewBox="0 0 100 100" class="rounded-circle" width="96" height="96" style="border: 2px solid rgba(251, 191, 36, 0.4); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="50" fill="#0f172a"/>
-                <!-- Jas Formal -->
+            return '<svg viewBox="0 0 100 100" ' . $dim . ' xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="50" fill="#1c1406"/>
                 <path d="M18 100 Q20 68 36 60 L64 60 Q80 68 82 100 Z" fill="#1e293b"/>
-                <!-- Kemeja Putih & Dasi Amber -->
                 <polygon points="42,60 58,60 55,84 45,84" fill="#ffffff"/>
                 <polygon points="48,63 52,63 53,83 50,88 47,83" fill="#d97706"/>
-                <!-- Leher & Wajah -->
                 <rect x="44" y="50" width="12" height="14" fill="#fed7aa"/>
                 <ellipse cx="50" cy="40" rx="15" ry="18" fill="#fed7aa"/>
-                <!-- Kacamata Formal -->
                 <rect x="38" y="36" width="10" height="7" rx="1.5" fill="none" stroke="#f8fafc" stroke-width="1.8"/>
                 <rect x="52" y="36" width="10" height="7" rx="1.5" fill="none" stroke="#f8fafc" stroke-width="1.8"/>
                 <line x1="48" y1="39" x2="52" y2="39" stroke="#f8fafc" stroke-width="1.8"/>
-                <!-- Rambut -->
                 <path d="M34 36 Q34 21 50 20 Q66 21 66 36 Q58 27 50 27 Q40 27 34 36 Z" fill="#1e293b"/>
             </svg>';
 
         case 'female_formal':
         default:
             // Avatar Formal Profesional
-            return '<svg viewBox="0 0 100 100" class="rounded-circle" width="96" height="96" style="border: 2px solid rgba(148, 163, 184, 0.4); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);" xmlns="http://www.w3.org/2000/svg">
+            return '<svg viewBox="0 0 100 100" ' . $dim . ' xmlns="http://www.w3.org/2000/svg">
                 <circle cx="50" cy="50" r="50" fill="#0f172a"/>
-                <!-- Jas Gelap -->
                 <path d="M18 100 Q20 68 36 60 L64 60 Q80 68 82 100 Z" fill="#1e293b"/>
-                <!-- Kemeja & Dasi Slate -->
                 <polygon points="42,60 58,60 55,84 45,84" fill="#ffffff"/>
                 <polygon points="48,63 52,63 53,83 50,88 47,83" fill="#64748b"/>
-                <!-- Kepala Siluet Halus -->
                 <rect x="44" y="50" width="12" height="14" fill="#94a3b8"/>
                 <ellipse cx="50" cy="40" rx="15" ry="18" fill="#cbd5e1"/>
-                <!-- Tanda Bintang Kontributor -->
                 <circle cx="50" cy="40" r="6" fill="#34d399"/>
             </svg>';
     }
 }
 ?>
 
-<!-- Header Hero Profil -->
-<div class="page-hero p-4 p-md-5 mb-4">
+<!-- Compact 3D Nature Hero Header -->
+<div class="card p-3 p-md-3 mb-3 profile-hero-3d">
   <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-    <div>
-      <span class="badge mb-2" style="background: rgba(16, 185, 129, 0.25); color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.4); font-size: 0.8rem; padding: 0.35rem 0.85rem; border-radius: 9999px;">
-        🌿 Tim Pengembang
-      </span>
-      <h1 class="display-6 fw-bold mb-2 text-white">Profil Kelompok NKRPPLG</h1>
-      <p class="lead mb-0 text-light" style="opacity: 0.9;">
-        Pengembang aplikasi KasirSMK &middot; Proyek Akhir P15-P16 Toko Maju Jaya.
-      </p>
-    </div>
-    <div class="d-none d-md-block text-end">
-      <div class="px-3 py-2 rounded-pill" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(8px);">
-        <small class="text-white fw-semibold">👥 Total: <strong>6 Anggota</strong></small>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Info Banner Tim -->
-<div class="card mb-4">
-  <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-3 py-3">
     <div class="d-flex align-items-center gap-3">
-      <div class="p-2 rounded" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3);">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-          <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
-        </svg>
+      <div class="hero-3d-badge">
+        🌿
       </div>
       <div>
-        <h2 class="h6 mb-0 fw-bold text-white">Organisasi: NKRPPLG</h2>
-        <small style="color: #94a3b8;">Kolaborasi siswa jurusan Pengembangan Perangkat Lunak dan GIM (PPLG)</small>
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="badge badge-emerald">Tim Pengembang</span>
+          <span class="text-muted small">&bull;</span>
+          <span class="small text-light" style="opacity: 0.85;">Organisasi <strong>NKRPPLG</strong></span>
+        </div>
+        <h1 class="h5 fw-bold mb-0 text-white profile-hero-title">Profil Kelompok Pengembang KasirSMK</h1>
       </div>
     </div>
-    <div class="d-flex gap-2">
-      <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.4); padding: 0.4rem 0.75rem; border-radius: 8px;">
-        XI PPLG 2 (4 Orang)
-      </span>
-      <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.4); padding: 0.4rem 0.75rem; border-radius: 8px;">
-        XI PPLG 1 (2 Orang)
-      </span>
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge badge-emerald">4 Siswa XI PPLG 2</span>
+      <span class="badge badge-amber">2 Siswa XI PPLG 1</span>
     </div>
   </div>
 </div>
 
-<!-- Grid 6 Kartu Profil Anggota -->
-<div class="row g-4 mb-5">
+<!-- Grid 6 Kartu Profil Anggota (Compact 3D Nature Cards) -->
+<div class="row g-3 mb-3">
   <?php foreach ($anggota as $item): ?>
     <div class="col-md-6 col-lg-4">
-      <div class="card h-100 d-flex flex-column profile-card" style="border-top: 4px solid <?= $item['warna_bg'] ?> !important;">
-        <div class="card-body d-flex flex-column text-center p-4">
-          <!-- Avatar Formal -->
-          <div class="mx-auto mb-3">
-            <?= renderAvatarFormal($item['gender']) ?>
+      <div class="card h-100 profile-card-3d p-3" style="--card-glow: <?= $item['warna_bg'] ?>26;">
+        <!-- Top Row: Avatar + Identity -->
+        <div class="d-flex align-items-center gap-2.5 mb-2">
+          <div class="avatar-orb flex-shrink-0" style="border-color: <?= $item['warna_bg'] ?>66; box-shadow: 0 0 12px <?= $item['warna_bg'] ?>33;">
+            <?= renderAvatarFormal($item['gender'], 54) ?>
           </div>
-
-          <!-- Nama & Identitas -->
-          <h3 class="h5 fw-bold mb-1 text-white"><?= htmlspecialchars($item['nama']) ?></h3>
-          <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
-            <span class="small fw-semibold" style="color: #cbd5e1;"><?= htmlspecialchars($item['panggilan']) ?></span>
-            <span style="color: #64748b;">&bull;</span>
-            <span class="badge" style="<?= $item['kelas'] === 'XI PPLG 1' ? 'background: rgba(245, 158, 11, 0.2); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.4);' : 'background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.4);' ?> font-size: 0.75rem;">
-              <?= htmlspecialchars($item['kelas']) ?>
-            </span>
-          </div>
-
-          <!-- Peran / Role -->
-          <div class="mb-3 py-2 px-3 rounded" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(52, 211, 153, 0.25);">
-            <span class="small fw-bold" style="color: #34d399;"><?= htmlspecialchars($item['peran']) ?></span>
-          </div>
-
-          <!-- Deskripsi Kontribusi -->
-          <p class="small flex-grow-1 mb-3" style="color: #94a3b8; line-height: 1.6; text-align: center;">
-            <?= htmlspecialchars($item['deskripsi']) ?>
-          </p>
-
-          <!-- Tag Tugas / Keahlian -->
-          <div class="d-flex flex-wrap justify-content-center gap-1 pt-3" style="border-top: 1px solid rgba(255, 255, 255, 0.08);">
-            <?php foreach ($item['tugas'] as $t): ?>
-              <span class="badge" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.12); color: #cbd5e1; font-size: 0.7rem; font-weight: 500;">
-                <?= htmlspecialchars($t) ?>
+          <div class="flex-grow-1 min-w-0">
+            <div class="d-flex align-items-center justify-content-between gap-1 mb-0.5">
+              <h3 class="h6 fw-bold mb-0 text-white text-truncate" title="<?= htmlspecialchars($item['nama']) ?>">
+                <?= htmlspecialchars($item['nama']) ?>
+              </h3>
+              <span class="badge <?= $item['kelas'] === 'XI PPLG 1' ? 'badge-amber' : 'badge-emerald' ?>">
+                <?= htmlspecialchars($item['kelas']) ?>
               </span>
-            <?php endforeach; ?>
+            </div>
+            <div class="member-nickname text-truncate"><?= htmlspecialchars($item['panggilan']) ?></div>
           </div>
         </div>
 
-        <!-- Footer Card: Akun GitHub -->
-        <div class="card-footer text-center py-3" style="background: rgba(0, 0, 0, 0.18); border-top: 1px solid rgba(255, 255, 255, 0.08);">
-          <a href="https://github.com/<?= htmlspecialchars($item['github']) ?>" target="_blank" rel="noopener noreferrer" class="github-profile-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-github me-1" viewBox="0 0 16 16">
+        <!-- Role Pill (Glow 3D Chip) -->
+        <div class="mb-2">
+          <div class="member-role text-truncate" title="<?= htmlspecialchars($item['peran']) ?>">
+            <span style="color: <?= $item['warna_bg'] ?>;">✦</span>
+            <?= htmlspecialchars($item['peran']) ?>
+          </div>
+        </div>
+
+        <!-- Description (Crisp & Compact) -->
+        <p class="member-desc" title="<?= htmlspecialchars($item['deskripsi']) ?>">
+          <?= htmlspecialchars($item['deskripsi']) ?>
+        </p>
+
+        <!-- Footer: Task Pills + GitHub Link -->
+        <div class="mt-auto pt-2 border-top-glass d-flex align-items-center justify-content-between gap-2">
+          <div class="d-flex flex-wrap gap-1 overflow-hidden" style="max-height: 24px;">
+            <?php foreach (array_slice($item['tugas'], 0, 2) as $t): ?>
+              <span class="task-pill"><?= htmlspecialchars($t) ?></span>
+            <?php endforeach; ?>
+          </div>
+          <a href="https://github.com/<?= htmlspecialchars($item['github']) ?>" target="_blank" rel="noopener noreferrer" class="github-pill" title="GitHub @<?= htmlspecialchars($item['github']) ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-github me-1" viewBox="0 0 16 16">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
             </svg>
-            @<?= htmlspecialchars($item['github']) ?>
+            <span>@<?= htmlspecialchars($item['github']) ?></span>
           </a>
         </div>
       </div>
@@ -297,15 +246,17 @@ function renderAvatarFormal(string $tipe): string {
 </div>
 
 <!-- Navigasi Cepat Proyek -->
-<div class="card p-3 mb-4">
+<div class="card p-2.5 px-3 mb-3 profile-quick-nav">
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-    <span style="color: #94a3b8; font-size: 0.875rem;">Navigasi Cepat Aplikasi:</span>
+    <span class="small text-muted d-flex align-items-center gap-1">
+      <span style="color: #34d399;">🌿</span> Navigasi Modul:
+    </span>
     <div class="d-flex flex-wrap gap-2">
-      <a class="btn btn-sm btn-outline-success text-white px-3" href="supplier.php">Modul Supplier</a>
-      <a class="btn btn-sm btn-outline-success text-white px-3" href="kasir.php">Modul Kasir</a>
-      <a class="btn btn-sm btn-outline-success text-white px-3" href="penjualan.php">Modul Penjualan</a>
-      <a class="btn btn-sm btn-outline-success text-white px-3" href="produk.php">Modul Produk</a>
-      <a class="btn btn-sm btn-success text-white px-3" href="index.php">Dashboard Utama</a>
+      <a class="btn btn-sm btn-outline-success text-white px-3" href="supplier.php">Supplier</a>
+      <a class="btn btn-sm btn-outline-success text-white px-3" href="kasir.php">Kasir</a>
+      <a class="btn btn-sm btn-outline-success text-white px-3" href="penjualan.php">Penjualan</a>
+      <a class="btn btn-sm btn-outline-success text-white px-3" href="produk.php">Produk</a>
+      <a class="btn btn-sm btn-success text-white px-3" href="index.php">Dashboard</a>
     </div>
   </div>
 </div>
