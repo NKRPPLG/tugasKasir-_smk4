@@ -1,0 +1,742 @@
+/* ============================================================
+   Kasir KMH - Tema Koperasi Merah Hitam
+   Warna  : Merah Marun / Crimson Deep Red (#881337, #991b1b)
+            & Hitam Charcoal Elegan (#111113, #18181b)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Brand Merah Hitam */
+  --brand-50:  #fff1f2;
+  --brand-100: #ffe4e6;
+  --brand-200: #fecdd3;
+  --brand-300: #fda4af;
+  --brand-400: #fb7185;
+  --brand-500: #e11d48;
+  --brand-600: #be123c;
+  --brand-700: #9f1239;
+  --brand-800: #881337;
+  --brand-900: #4c0519;
+
+  /* Hitam & Abu-abu Netral */
+  --dark-950:  #09090b;
+  --dark-900:  #111113;
+  --dark-800:  #18181b;
+  --dark-700:  #27272a;
+
+  --gray-50:   #f8fafc;
+  --gray-100:  #f1f5f9;
+  --gray-200:  #e2e8f0;
+  --gray-300:  #cbd5e1;
+  --gray-400:  #94a3b8;
+  --gray-500:  #64748b;
+  --gray-600:  #475569;
+  --gray-700:  #334155;
+  --gray-800:  #1e293b;
+  --gray-900:  #0f172a;
+
+  /* Status Colors */
+  --clr-success:        #15803d;
+  --clr-success-light:  #dcfce7;
+  --clr-warning:        #b45309;
+  --clr-warning-light:  #fef3c7;
+  --clr-danger:         #b91c1c;
+  --clr-danger-light:   #fee2e2;
+  --clr-info:           #0369a1;
+  --clr-info-light:     #e0f2fe;
+
+  /* Layout Tokens */
+  --sidebar-w: 240px;
+  --topbar-h: 58px;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.875rem;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 14px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.04);
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Bootstrap Global Overrides */
+  --bs-primary: #881337;
+  --bs-primary-rgb: 136, 19, 55;
+  --bs-link-color: #881337;
+  --bs-link-hover-color: #700f2d;
+}
+
+/* Fallback Bootstrap Classes Overrides */
+.btn-primary {
+  background-color: #881337 !important;
+  border-color: #881337 !important;
+  color: #ffffff !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #700f2d !important;
+  border-color: #700f2d !important;
+  color: #ffffff !important;
+}
+.btn-outline-primary {
+  color: #881337 !important;
+  border-color: #881337 !important;
+}
+.btn-outline-primary:hover {
+  background-color: #881337 !important;
+  border-color: #881337 !important;
+  color: #ffffff !important;
+}
+.text-primary {
+  color: #881337 !important;
+}
+.bg-primary {
+  background-color: #881337 !important;
+}
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.925rem;
+  line-height: 1.6;
+  color: var(--gray-800);
+  background-color: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--brand-800);
+  text-decoration: none;
+  transition: color .15s ease;
+}
+a:hover { color: var(--brand-600); }
+
+/* ============================================================
+   LAYOUT UTAMA: Sidebar + Konten
+   ============================================================ */
+.ks-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---- SIDEBAR (Hitam Elegan) ---- */
+.ks-sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background-color: var(--dark-900);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+  overflow-y: auto;
+  transition: transform .25s ease;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Brand / Logo Area */
+.ks-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  text-decoration: none;
+}
+
+.ks-brand-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #b91c1c 0%, #881337 100%);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(185, 28, 28, 0.35);
+}
+
+.ks-brand-name {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+}
+
+.ks-brand-sub {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+/* Nav Menu */
+.ks-nav {
+  flex: 1;
+  padding: 1rem 0.65rem;
+  list-style: none;
+  margin: 0;
+}
+
+.ks-nav-label {
+  padding: 0.65rem 0.85rem 0.35rem;
+  font-size: 0.675rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.ks-nav-item {
+  margin-bottom: 0.2rem;
+}
+
+.ks-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.95rem;
+  color: #cbd5e1;
+  font-weight: 500;
+  font-size: 0.885rem;
+  border-radius: var(--radius-md);
+  transition: all .15s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.ks-nav-link .ks-nav-icon {
+  font-size: 1.05rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+  opacity: .85;
+}
+
+.ks-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+.ks-nav-link:hover .ks-nav-icon { opacity: 1; }
+
+/* Active Menu (Merah Marun Elegan) */
+.ks-nav-link.active {
+  background: linear-gradient(90deg, #881337 0%, #9f1239 100%);
+  color: #ffffff !important;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(136, 19, 55, 0.4);
+}
+.ks-nav-link.active .ks-nav-icon {
+  opacity: 1;
+}
+
+.ks-nav-divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.08);
+  margin: 0.75rem 0.65rem;
+}
+
+/* Sidebar Footer */
+.ks-sidebar-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 0.72rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* ---- AREA KONTEN ---- */
+.ks-content {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Topbar Putih dengan Garis Merah di Bawah */
+.ks-topbar {
+  height: var(--topbar-h);
+  background-color: #ffffff;
+  border-bottom: 2px solid #881337;
+  display: flex;
+  align-items: center;
+  padding: 0 1.75rem;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  box-shadow: 0 1px 4px rgba(0,0,0,.03);
+}
+
+.ks-topbar-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--dark-800);
+  flex: 1;
+}
+
+.ks-topbar-breadcrumb {
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+/* Mobile Hamburger */
+.ks-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  color: var(--gray-700);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+/* Main Content Area */
+.ks-main {
+  flex: 1;
+  padding: 1.75rem;
+}
+
+/* Footer Halaman */
+.ks-footer {
+  padding: 1rem 1.75rem;
+  border-top: 1px solid var(--gray-200);
+  background-color: #ffffff;
+  font-size: 0.775rem;
+  color: var(--gray-400);
+  text-align: center;
+}
+
+/* ============================================================
+   KOMPONEN UI
+   ============================================================ */
+
+/* ---- Page Header ---- */
+.ks-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.ks-page-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--dark-900);
+  margin: 0 0 0.15rem;
+  letter-spacing: -.02em;
+}
+
+.ks-page-subtitle {
+  font-size: 0.825rem;
+  color: var(--gray-500);
+  margin: 0;
+}
+
+/* ---- Hero Banner (Ombak Merah Gelap Eksklusif & Seamless) ---- */
+.ks-hero {
+  background: 
+    radial-gradient(ellipse at 85% 15%, rgba(225, 29, 72, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse at 100% 100%, rgba(15, 2, 5, 0.85) 0%, transparent 70%),
+    linear-gradient(135deg, #881337 0%, #680d26 35%, #450a0a 65%, #180206 100%);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2.5rem;
+  color: #ffffff;
+  margin-bottom: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(136, 19, 55, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.ks-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23881337' stop-opacity='0'/%3E%3Cstop offset='40%25' stop-color='%234c0519' stop-opacity='0.45'/%3E%3Cstop offset='100%25' stop-color='%23110206' stop-opacity='0.9'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='0%25' y1='50%25' x2='100%25' y2='50%25'%3E%3Cstop offset='0%25' stop-color='%23e11d48' stop-opacity='0'/%3E%3Cstop offset='50%25' stop-color='%23be123c' stop-opacity='0.25'/%3E%3Cstop offset='100%25' stop-color='%2338040f' stop-opacity='0.75'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g1)' d='M0,192L60,197.3C120,203,240,213,360,197.3C480,181,600,139,720,138.7C840,139,960,181,1080,197.3C1200,213,1320,203,1380,197.3L1440,192L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'/%3E%3Cpath fill='url(%23g2)' d='M0,256L60,240C120,224,240,192,360,192C480,192,600,224,720,234.7C840,245,960,235,1080,208C1200,181,1320,139,1380,117.3L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'/%3E%3C/svg%3E") no-repeat center center;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+.ks-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  background: radial-gradient(circle at 100% 40%, rgba(225, 29, 72, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ks-hero h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  letter-spacing: -.025em;
+  position: relative;
+  z-index: 1;
+}
+
+.ks-hero p {
+  color: #fecdd3;
+  font-size: 0.95rem;
+  margin: 0;
+  max-width: 560px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Stat Cards ---- */
+.ks-stat {
+  background: #ffffff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.ks-stat:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.ks-stat-label {
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  margin-bottom: 0.35rem;
+}
+
+.ks-stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--dark-900);
+  line-height: 1;
+}
+.ks-stat-value.text-danger  { color: #b91c1c !important; }
+.ks-stat-value.text-success { color: var(--clr-success) !important; }
+.ks-stat-value.text-primary { color: #881337 !important; }
+
+.ks-stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+.ks-stat-icon.red,
+.ks-stat-icon.teal { background-color: var(--brand-100); color: var(--brand-800); }
+.ks-stat-icon.green { background-color: var(--clr-success-light); color: var(--clr-success); }
+.ks-stat-icon.amber { background-color: var(--clr-warning-light); color: var(--clr-warning); }
+
+/* ---- Cards ---- */
+.ks-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0,0,0,.03);
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.ks-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+}
+
+.ks-card-header {
+  padding: 0.95rem 1.25rem;
+  border-bottom: 1px solid var(--gray-200);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--dark-800);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background-color: #ffffff;
+}
+
+.ks-card-body {
+  padding: 1.35rem;
+}
+
+/* ---- Badges ---- */
+.ks-badge {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  border-radius: 6px;
+  line-height: 1.2;
+}
+
+/* Badge Hitam Elegan (seperti di screenshot) */
+.ks-badge-neutral,
+.ks-badge-dark {
+  background-color: var(--dark-800) !important;
+  color: #ffffff !important;
+}
+
+.ks-badge-success { background-color: var(--clr-success-light); color: var(--clr-success); }
+.ks-badge-warning { background-color: var(--clr-warning-light); color: var(--clr-warning); }
+.ks-badge-danger  { background-color: var(--clr-danger-light);  color: var(--clr-danger); }
+.ks-badge-info    { background-color: var(--clr-info-light);    color: var(--clr-info); }
+.ks-badge-brand   { background-color: var(--brand-100);         color: var(--brand-800); }
+
+/* ---- Buttons ---- */
+.ks-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1.15rem;
+  font-size: 0.865rem;
+  font-weight: 600;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all .15s ease;
+  text-decoration: none;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.ks-btn:focus-visible {
+  outline: 2px solid var(--brand-600);
+  outline-offset: 2px;
+}
+
+/* Primary Button (Merah Marun Koperasi) */
+.ks-btn-primary {
+  background-color: #881337;
+  border-color: #881337;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(136, 19, 55, 0.25);
+}
+.ks-btn-primary:hover {
+  background-color: #700f2d;
+  border-color: #700f2d;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(136, 19, 55, 0.35);
+}
+
+/* Ghost / Secondary Button (Putih Garis Halus) */
+.ks-btn-ghost {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #334155 !important;
+}
+.ks-btn-ghost:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a !important;
+}
+
+/* Danger Button */
+.ks-btn-danger {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+  color: #ffffff !important;
+}
+.ks-btn-danger:hover {
+  background-color: #991b1b;
+  border-color: #991b1b;
+}
+
+.ks-btn-outline-danger {
+  background-color: #ffffff;
+  border-color: #fca5a5;
+  color: #b91c1c !important;
+}
+.ks-btn-outline-danger:hover {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+  color: #ffffff !important;
+}
+
+/* Small Button */
+.ks-btn-sm {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.825rem;
+}
+
+/* ---- Tables ---- */
+.ks-table-wrap {
+  overflow-x: auto;
+}
+
+.ks-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.ks-table thead tr {
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.ks-table thead th {
+  padding: 0.75rem 0.95rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  white-space: nowrap;
+  background-color: var(--gray-50);
+}
+
+.ks-table tbody tr {
+  border-bottom: 1px solid var(--gray-100);
+  transition: background .12s ease;
+}
+
+.ks-table tbody tr:hover {
+  background-color: #fff1f2;
+}
+
+.ks-table td {
+  padding: 0.75rem 0.95rem;
+  color: var(--gray-700);
+  vertical-align: middle;
+}
+
+.ks-table td code {
+  background-color: var(--gray-100);
+  padding: 0.15em 0.45em;
+  border-radius: var(--radius-sm);
+  font-size: 0.82em;
+  color: var(--dark-800);
+}
+
+.ks-table td.text-end,
+.ks-table th.text-end { text-align: right; }
+
+/* ---- Alerts ---- */
+.ks-alert {
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  border: 1px solid;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+.ks-alert-icon { font-size: 1.05rem; flex-shrink: 0; }
+
+.ks-alert-success {
+  background-color: var(--clr-success-light);
+  border-color: #86efac;
+  color: #14532d;
+}
+.ks-alert-danger {
+  background-color: var(--clr-danger-light);
+  border-color: #fca5a5;
+  color: #7f1d1d;
+}
+.ks-alert-warning {
+  background-color: var(--clr-warning-light);
+  border-color: #fcd34d;
+  color: #78350f;
+}
+.ks-alert-info {
+  background-color: var(--clr-info-light);
+  border-color: #7dd3fc;
+  color: #0c4a6e;
+}
+
+/* ---- Form Controls ---- */
+.ks-form-group { margin-bottom: 1rem; }
+
+.ks-label {
+  display: block;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 0.35rem;
+}
+
+.ks-input,
+.ks-select,
+.ks-textarea {
+  display: block;
+  width: 100%;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  color: var(--gray-800);
+  background-color: #ffffff;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  transition: border-color .15s, box-shadow .15s;
+  line-height: 1.5;
+  appearance: none;
+}
+
+.ks-input:focus, .ks-select:focus, .ks-textarea:focus {
+  outline: none;
+  border-color: #881337;
+  box-shadow: 0 0 0 3px rgba(136, 19, 55, 0.12);
+}
+
+.ks-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.25rem;
+}
+
+/* Search bar */
+.ks-search-wrap {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.ks-search-input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.ks-text-muted { color: var(--gray-400); }
+.ks-text-sm    { font-size: 0.8rem; }
+
+/* ============================================================
+   RESPONSIVE: Mobile
+   ============================================================ */
+@media (max-width: 768px) {
+  .ks-sidebar { transform: translateX(-100%); }
+  .ks-sidebar.open { transform: translateX(0); }
+  .ks-content { margin-left: 0; }
+  .ks-hamburger { display: flex; align-items: center; }
+  .ks-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,.5);
+    z-index: 99;
+  }
+  .ks-overlay.open { display: block; }
+}
+
+@media print {
+  .ks-sidebar, .ks-topbar, .ks-footer, .ks-btn, .no-print { display: none !important; }
+  .ks-content { margin-left: 0; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+}

@@ -73,138 +73,141 @@ $halaman = 'penjualan';
 require __DIR__ . '/partials/header.php';
 ?>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-  <div>
-    <span class="badge text-bg-success mb-2">Barang Keluar</span>
-    <h1 class="h3 mb-1">Daftar Penjualan</h1>
-    <p class="text-secondary mb-0">
+<div class="ks-page-header mb-4">
+  <div class="ks-page-header-left">
+    <span class="ks-badge ks-badge-neutral mb-2">Barang Keluar</span>
+    <h1 class="ks-page-title">Daftar Penjualan</h1>
+    <p class="ks-page-subtitle">
       Riwayat transaksi kasir, metode pembayaran, dan rincian omzet penjualan.
     </p>
   </div>
   <div class="d-flex gap-2">
-    <a class="btn btn-primary" href="penjualan_tambah.php">+ Tambah Penjualan</a>
+    <a class="ks-btn ks-btn-primary" href="penjualan_tambah.php">+ Tambah Penjualan</a>
   </div>
 </div>
 
 <?php if ($errorTabel !== ''): ?>
-  <div class="alert alert-danger">
-    <strong>Tabel penjualan belum bisa dibaca.</strong>
-    <div class="small mt-1">Pesan MySQL: <?= htmlspecialchars($errorTabel) ?></div>
+  <div class="ks-alert ks-alert-danger mb-3">
+    <span class="ks-alert-icon">⚠️</span>
+    <div>
+      <strong>Tabel penjualan belum bisa dibaca.</strong>
+      <div class="ks-text-sm mt-1">Pesan MySQL: <?= htmlspecialchars($errorTabel) ?></div>
+    </div>
   </div>
 <?php endif; ?>
 
 <?php if (isset($pesanStatus[$status])): ?>
-  <div class="alert alert-<?= $pesanStatus[$status][0] ?> alert-dismissible fade show" role="alert">
-    <?= htmlspecialchars($pesanStatus[$status][1]) ?>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <?php $tipe = $pesanStatus[$status][0] === 'success' ? 'ks-alert-success' : 'ks-alert-danger'; ?>
+  <div class="ks-alert <?= $tipe ?> mb-3">
+    <span class="ks-alert-icon"><?= $pesanStatus[$status][0] === 'success' ? '✅' : '❌' ?></span>
+    <span><?= htmlspecialchars($pesanStatus[$status][1]) ?></span>
   </div>
 <?php endif; ?>
 
 <!-- Kartu Statistik Penjualan -->
 <div class="row g-3 mb-4">
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Total Nota Penjualan</div>
-        <div class="fs-3 fw-bold"><?= $jumlahNota ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon teal">🧾</div>
+      <div>
+        <div class="ks-stat-label">Total Nota Penjualan</div>
+        <div class="ks-stat-value"><?= $jumlahNota ?></div>
       </div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Total Item Terjual</div>
-        <div class="fs-3 fw-bold"><?= number_format($totalItem, 0, ',', '.') ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon green">📦</div>
+      <div>
+        <div class="ks-stat-label">Total Item Terjual</div>
+        <div class="ks-stat-value"><?= number_format($totalItem, 0, ',', '.') ?></div>
       </div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Total Omzet Penjualan</div>
-        <div class="fs-4 fw-bold text-primary"><?= rupiah($totalNilai) ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon red">💰</div>
+      <div>
+        <div class="ks-stat-label">Total Omzet Penjualan</div>
+        <div class="ks-stat-value"><?= rupiah($totalNilai) ?></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Tabel Daftar Penjualan -->
-<div class="card mb-4">
-  <div class="card-body">
-    <form method="get" action="penjualan.php" class="row g-2 align-items-center mb-3">
-      <div class="col-auto flex-grow-1">
-        <input class="form-control" type="text" name="cari"
-               placeholder="Cari nomor nota (PJ-...), kasir, atau metode bayar..."
-               value="<?= htmlspecialchars($cari) ?>">
-      </div>
-      <div class="col-auto">
-        <button class="btn btn-outline-primary" type="submit">Cari</button>
-        <?php if ($cari !== ''): ?>
-          <a class="btn btn-outline-secondary" href="penjualan.php">Reset</a>
-        <?php endif; ?>
-      </div>
+<div class="ks-card mb-4">
+  <div class="ks-card-body">
+    <form method="get" action="penjualan.php" class="ks-search-wrap mb-3">
+      <input class="ks-input ks-search-input" type="text" name="cari"
+             placeholder="🔍  Cari nomor nota (PJ-...), kasir, atau metode bayar..."
+             value="<?= htmlspecialchars($cari) ?>">
+      <button class="ks-btn ks-btn-primary" type="submit">Cari</button>
+      <?php if ($cari !== ''): ?>
+        <a class="ks-btn ks-btn-ghost" href="penjualan.php">Reset</a>
+      <?php endif; ?>
     </form>
+  </div>
 
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-light">
+  <div class="ks-table-wrap">
+    <table class="ks-table">
+      <thead>
+        <tr>
+          <th>No. Nota</th>
+          <th>Tanggal</th>
+          <th>Kasir</th>
+          <th>Metode Bayar</th>
+          <th class="text-center">Item</th>
+          <th class="text-end">Total Belanja</th>
+          <th class="text-end">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if ($jumlahNota === 0): ?>
           <tr>
-            <th>No. Nota</th>
-            <th>Tanggal</th>
-            <th>Kasir</th>
-            <th>Metode Bayar</th>
-            <th class="text-center">Item</th>
-            <th class="text-end">Total Belanja</th>
-            <th class="text-end">Aksi</th>
+            <td colspan="7" class="text-center ks-text-muted py-4">
+              <?= $cari !== '' ? 'Tidak ada nota penjualan yang cocok dengan kata kunci pencarian.' : 'Belum ada data transaksi penjualan.' ?>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <?php if ($jumlahNota === 0): ?>
+        <?php else: ?>
+          <?php foreach ($daftarPenjualan as $pj): ?>
             <tr>
-              <td colspan="7" class="text-center text-secondary py-4">
-                <?= $cari !== '' ? 'Tidak ada nota penjualan yang cocok dengan kata kunci pencarian.' : 'Belum ada data transaksi penjualan.' ?>
+              <td>
+                <span class="ks-badge ks-badge-brand" style="font-family:monospace; font-size: 0.825rem;">
+                  <?= htmlspecialchars($pj['no_penjualan']) ?>
+                </span>
+              </td>
+              <td><?= htmlspecialchars($pj['tanggal']) ?></td>
+              <td class="fw-semibold">
+                <?= $pj['nama_kasir'] ? htmlspecialchars($pj['nama_kasir']) : '<span class="ks-text-muted">(Kasir dihapus)</span>' ?>
+              </td>
+              <td>
+                <?php
+                $metode = $pj['metode_bayar'] ?? 'Tunai';
+                $badgeClass = 'ks-badge-neutral';
+                if ($metode === 'Tunai') $badgeClass = 'ks-badge-success';
+                elseif ($metode === 'QRIS') $badgeClass = 'ks-badge-warning';
+                elseif ($metode === 'Debit') $badgeClass = 'ks-badge-brand';
+                ?>
+                <span class="ks-badge <?= $badgeClass ?>">
+                  <?= htmlspecialchars($metode) ?>
+                </span>
+              </td>
+              <td class="text-center"><?= (int) $pj['jumlah_item'] ?></td>
+              <td class="text-end fw-bold">
+                <?= rupiah($pj['total']) ?>
+              </td>
+              <td class="text-end">
+                <a class="ks-btn ks-btn-ghost ks-btn-sm"
+                   href="penjualan_detail.php?no=<?= urlencode($pj['no_penjualan']) ?>">
+                  Detail Nota
+                </a>
               </td>
             </tr>
-          <?php else: ?>
-            <?php foreach ($daftarPenjualan as $pj): ?>
-              <tr>
-                <td>
-                  <span class="badge text-bg-primary font-monospace" style="font-size: 0.825rem;">
-                    <?= htmlspecialchars($pj['no_penjualan']) ?>
-                  </span>
-                </td>
-                <td><?= htmlspecialchars($pj['tanggal']) ?></td>
-                <td class="fw-semibold">
-                  <?= $pj['nama_kasir'] ? htmlspecialchars($pj['nama_kasir']) : '<span class="text-muted">(Kasir dihapus)</span>' ?>
-                </td>
-                <td>
-                  <?php
-                  $metode = $pj['metode_bayar'] ?? 'Tunai';
-                  $badgeColor = 'text-bg-secondary';
-                  if ($metode === 'Tunai') $badgeColor = 'text-bg-success';
-                  elseif ($metode === 'QRIS') $badgeColor = 'text-bg-warning';
-                  elseif ($metode === 'Debit') $badgeColor = 'text-bg-primary';
-                  ?>
-                  <span class="badge <?= $badgeColor ?>">
-                    <?= htmlspecialchars($metode) ?>
-                  </span>
-                </td>
-                <td class="text-center"><?= (int) $pj['jumlah_item'] ?></td>
-                <td class="text-end fw-bold text-primary">
-                  <?= rupiah($pj['total']) ?>
-                </td>
-                <td class="text-end">
-                  <a class="btn btn-sm btn-outline-primary"
-                     href="penjualan_detail.php?no=<?= urlencode($pj['no_penjualan']) ?>">
-                    Detail Nota
-                  </a>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </tbody>
+    </table>
   </div>
 </div>
 

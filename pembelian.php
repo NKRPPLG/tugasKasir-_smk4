@@ -72,128 +72,122 @@ $halaman = 'pembelian';
 require __DIR__ . '/partials/header.php';
 ?>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-  <div>
-    <span class="badge text-bg-success mb-2">Barang Masuk</span>
-    <h1 class="h3 mb-1">Daftar Pembelian</h1>
-    <p class="text-secondary mb-0">
-      Nota pembelian dibaca dari tabel <code>pembelian</code> dan
-      <code>detail_pembelian</code>. Total dihitung dari detail.
-    </p>
+<div class="ks-page-header mb-4">
+  <div class="ks-page-header-left">
+    <span class="ks-badge ks-badge-neutral mb-2">Barang Masuk</span>
+    <h1 class="ks-page-title">Daftar Pembelian</h1>
+    <p class="ks-page-subtitle">Riwayat transaksi barang masuk Koperasi Merah Hitam</p>
   </div>
   <div class="d-flex gap-2">
-    <a class="btn btn-primary" href="pembelian_tambah.php">Tambah Pembelian</a>
-    <a class="btn btn-outline-secondary" href="panduan.php#alur-pembelian">Panduan</a>
+    <a class="ks-btn ks-btn-primary" href="pembelian_tambah.php">Tambah Pembelian</a>
   </div>
 </div>
 
 <?php if ($errorTabel !== ''): ?>
-  <div class="alert alert-danger">
-    <strong>Tabel pembelian belum bisa dibaca.</strong>
-    <div class="small mt-1">Pesan MySQL: <?= htmlspecialchars($errorTabel) ?></div>
+  <div class="ks-alert ks-alert-danger mb-3">
+    <span class="ks-alert-icon">⚠️</span>
+    <div>
+      <strong>Tabel pembelian belum bisa dibaca.</strong>
+      <div class="ks-text-sm mt-1">Pesan MySQL: <?= htmlspecialchars($errorTabel) ?></div>
+    </div>
   </div>
 <?php endif; ?>
 
 <?php if (($_GET['status'] ?? '') === 'tambah'): ?>
-  <div class="alert alert-success">Pembelian baru berhasil disimpan.</div>
+  <div class="ks-alert ks-alert-success mb-3">
+    <span class="ks-alert-icon">✅</span>
+    <span>Pembelian baru berhasil disimpan.</span>
+  </div>
 <?php endif; ?>
 
 <div class="row g-3 mb-4">
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Jumlah Nota</div>
-        <div class="fs-3 fw-bold"><?= $jumlahNota ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon teal">🧾</div>
+      <div>
+        <div class="ks-stat-label">Jumlah Nota</div>
+        <div class="ks-stat-value"><?= $jumlahNota ?></div>
       </div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Total Nilai</div>
-        <div class="fs-4 fw-bold text-primary"><?= rupiah($totalNilai) ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon green">💰</div>
+      <div>
+        <div class="ks-stat-label">Total Nilai</div>
+        <div class="ks-stat-value"><?= rupiah($totalNilai) ?></div>
       </div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Baris Barang</div>
-        <div class="fs-3 fw-bold"><?= $totalItem ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon red">📦</div>
+      <div>
+        <div class="ks-stat-label">Baris Barang</div>
+        <div class="ks-stat-value"><?= $totalItem ?></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="card mb-4">
-  <div class="card-body">
-    <form class="row g-2 mb-3" method="get" action="pembelian.php">
-      <div class="col-md-6">
-        <input class="form-control" type="text" name="cari"
-               value="<?= htmlspecialchars($cari) ?>"
-               placeholder="Cari nomor nota, kasir, atau supplier...">
-      </div>
-      <div class="col-auto">
-        <button class="btn btn-primary" type="submit">Cari</button>
-      </div>
+<div class="ks-card mb-4">
+  <div class="ks-card-body">
+    <form class="ks-search-wrap mb-3" method="get" action="pembelian.php">
+      <input class="ks-input ks-search-input" type="text" name="cari"
+             value="<?= htmlspecialchars($cari) ?>"
+             placeholder="🔍  Cari nomor nota, kasir, atau supplier...">
+      <button class="ks-btn ks-btn-primary" type="submit">Cari</button>
       <?php if ($cari !== ''): ?>
-        <div class="col-auto">
-          <a class="btn btn-outline-secondary" href="pembelian.php">Reset</a>
-        </div>
+        <a class="ks-btn ks-btn-ghost" href="pembelian.php">Reset</a>
       <?php endif; ?>
     </form>
 
     <?php if ($cari !== ''): ?>
-      <p class="text-secondary small">
+      <p class="ks-text-sm ks-text-muted mb-3">
         Hasil pencarian untuk: <strong><?= htmlspecialchars($cari) ?></strong>
       </p>
     <?php endif; ?>
+  </div>
 
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-light">
+  <div class="ks-table-wrap">
+    <table class="ks-table">
+      <thead>
+        <tr>
+          <th>No. Pembelian</th>
+          <th>Tanggal</th>
+          <th>Supplier</th>
+          <th>Kasir</th>
+          <th class="text-end">Item</th>
+          <th class="text-end">Total</th>
+          <th class="text-end">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if ($jumlahNota === 0): ?>
           <tr>
-            <th>No. Pembelian</th>
-            <th>Tanggal</th>
-            <th>Supplier</th>
-            <th>Kasir</th>
-            <th class="text-end">Item</th>
-            <th class="text-end">Total</th>
-            <th class="text-end">Aksi</th>
+            <td colspan="7" class="text-center ks-text-muted py-4">
+              <?= $cari !== '' ? 'Tidak ada pembelian yang cocok.' : 'Belum ada pembelian. Klik "Tambah Pembelian".' ?>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <?php if ($jumlahNota === 0): ?>
+        <?php else: ?>
+          <?php foreach ($daftarPembelian as $nota): ?>
             <tr>
-              <td colspan="7" class="text-center text-secondary py-4">
-                <?= $cari !== '' ? 'Tidak ada pembelian yang cocok.' : 'Belum ada pembelian. Klik "Tambah Pembelian".' ?>
+              <td><code><?= htmlspecialchars($nota['no_pembelian']) ?></code></td>
+              <td><?= htmlspecialchars($nota['tanggal']) ?></td>
+              <td><?= htmlspecialchars($nota['nama_supplier'] ?? '-') ?></td>
+              <td><?= htmlspecialchars($nota['nama_kasir'] ?? '-') ?></td>
+              <td class="text-end"><?= (int) $nota['jumlah_item'] ?></td>
+              <td class="text-end"><?= rupiah($nota['total']) ?></td>
+              <td class="text-end">
+                <a class="ks-btn ks-btn-ghost ks-btn-sm"
+                   href="pembelian_detail.php?no=<?= urlencode($nota['no_pembelian']) ?>">Detail</a>
               </td>
             </tr>
-          <?php else: ?>
-            <?php foreach ($daftarPembelian as $nota): ?>
-              <tr>
-                <td><code><?= htmlspecialchars($nota['no_pembelian']) ?></code></td>
-                <td><?= htmlspecialchars($nota['tanggal']) ?></td>
-                <td><?= htmlspecialchars($nota['nama_supplier'] ?? '-') ?></td>
-                <td><?= htmlspecialchars($nota['nama_kasir'] ?? '-') ?></td>
-                <td class="text-end"><?= (int) $nota['jumlah_item'] ?></td>
-                <td class="text-end"><?= rupiah($nota['total']) ?></td>
-                <td class="text-end">
-                  <a class="btn btn-sm btn-outline-primary"
-                     href="pembelian_detail.php?no=<?= urlencode($nota['no_pembelian']) ?>">Detail</a>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </tbody>
+    </table>
   </div>
-</div>
-
-<div class="alert alert-info mb-0">
-  <strong>Latihan:</strong> buka salah satu detail pembelian, lalu cocokkan
-  total nota dengan <code>SUM(jumlah * harga_beli)</code> di phpMyAdmin.
 </div>
 
 <?php require __DIR__ . '/partials/footer.php'; ?>

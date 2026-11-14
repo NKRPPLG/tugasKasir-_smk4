@@ -57,91 +57,92 @@ $halaman = 'supplier';
 require __DIR__ . '/partials/header.php';
 ?>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-  <div>
-    <span class="badge text-bg-success mb-2">Master Data</span>
-    <h1 class="h3 mb-1">Daftar Supplier</h1>
-    <p class="text-secondary mb-0">Mitra pemasok Toko Maju Jaya &middot; database <code>db_penjualan</code></p>
+<div class="ks-page-header mb-4">
+  <div class="ks-page-header-left">
+    <span class="ks-badge ks-badge-neutral mb-2">Master Data</span>
+    <h1 class="ks-page-title">Daftar Supplier</h1>
+    <p class="ks-page-subtitle">Mitra pemasok Koperasi Merah Hitam</p>
   </div>
   <div class="d-flex gap-2">
-    <a class="btn btn-primary" href="supplier_tambah.php">+ Tambah Supplier</a>
+    <a class="ks-btn ks-btn-primary" href="supplier_tambah.php">+ Tambah Supplier</a>
   </div>
 </div>
 
 <?php if ($errorTabel !== ''): ?>
-  <div class="alert alert-danger">
-    <strong>Tabel supplier belum bisa dibaca.</strong>
-    <div class="small mt-1">Pesan MySQL: <?= htmlspecialchars($errorTabel) ?></div>
+  <div class="ks-alert ks-alert-danger mb-3">
+    <span class="ks-alert-icon">⚠️</span>
+    <div>
+      <strong>Tabel supplier belum bisa dibaca.</strong>
+      <div class="ks-text-sm mt-1">Pesan MySQL: <?= htmlspecialchars($errorTabel) ?></div>
+    </div>
   </div>
 <?php endif; ?>
 
 <?php if (isset($pesanStatus[$status])): ?>
-  <div class="alert alert-<?= $pesanStatus[$status][0] ?> alert-dismissible fade show" role="alert">
-    <?= htmlspecialchars($pesanStatus[$status][1]) ?>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <?php $tipe = $pesanStatus[$status][0] === 'success' ? 'ks-alert-success' : 'ks-alert-danger'; ?>
+  <div class="ks-alert <?= $tipe ?> mb-3">
+    <span class="ks-alert-icon"><?= $pesanStatus[$status][0] === 'success' ? '✅' : '❌' ?></span>
+    <span><?= htmlspecialchars($pesanStatus[$status][1]) ?></span>
   </div>
 <?php endif; ?>
 
 <div class="row g-3 mb-4">
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Total Supplier</div>
-        <div class="fs-3 fw-bold"><?= $jumlahSupplier ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon teal">🏭</div>
+      <div>
+        <div class="ks-stat-label">Total Supplier</div>
+        <div class="ks-stat-value"><?= $jumlahSupplier ?></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="card mb-4">
-  <div class="card-body">
-    <form method="get" action="supplier.php" class="row g-2 align-items-center mb-3">
-      <div class="col-auto flex-grow-1">
-        <input class="form-control" type="text" name="cari"
-               placeholder="Cari nama supplier atau kota..."
-               value="<?= htmlspecialchars($cari) ?>">
-      </div>
-      <div class="col-auto">
-        <button class="btn btn-outline-primary" type="submit">Cari</button>
-        <?php if ($cari !== ''): ?>
-          <a class="btn btn-outline-secondary" href="supplier.php">Reset</a>
-        <?php endif; ?>
-      </div>
+<div class="ks-card mb-4">
+  <div class="ks-card-body">
+    <form method="get" action="supplier.php" class="ks-search-wrap mb-3">
+      <input class="ks-input ks-search-input" type="text" name="cari"
+             placeholder="🔍  Cari nama supplier atau kota..."
+             value="<?= htmlspecialchars($cari) ?>">
+      <button class="ks-btn ks-btn-primary" type="submit">Cari</button>
+      <?php if ($cari !== ''): ?>
+        <a class="ks-btn ks-btn-ghost" href="supplier.php">Reset</a>
+      <?php endif; ?>
     </form>
+  </div>
 
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-light">
+  <div class="ks-table-wrap">
+    <table class="ks-table">
+      <thead>
+        <tr>
+          <th style="width: 80px;">ID</th>
+          <th>Nama Supplier</th>
+          <th>Kota</th>
+          <th class="text-end" style="width: 180px;">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if ($jumlahSupplier === 0): ?>
           <tr>
-            <th style="width: 80px;">ID</th>
-            <th>Nama Supplier</th>
-            <th>Kota</th>
-            <th class="text-end" style="width: 180px;">Aksi</th>
+            <td colspan="4" class="text-center ks-text-muted py-4">
+              <?= $cari !== '' ? 'Tidak ada supplier yang cocok dengan kata kunci pencarian.' : 'Belum ada data supplier.' ?>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <?php if ($jumlahSupplier === 0): ?>
+        <?php else: ?>
+          <?php foreach ($daftarSupplier as $s): ?>
             <tr>
-              <td colspan="4" class="text-center text-secondary py-4">
-                <?= $cari !== '' ? 'Tidak ada supplier yang cocok dengan kata kunci pencarian.' : 'Belum ada data supplier.' ?>
+              <td><?= (int) $s['id_supplier'] ?></td>
+              <td class="fw-semibold"><?= htmlspecialchars($s['nama_supplier']) ?></td>
+              <td><?= $s['kota'] !== null && $s['kota'] !== '' ? htmlspecialchars($s['kota']) : '<span class="ks-text-muted">-</span>' ?></td>
+              <td class="text-end">
+                <a class="ks-btn ks-btn-ghost ks-btn-sm" href="supplier_edit.php?id_supplier=<?= (int) $s['id_supplier'] ?>">Edit</a>
+                <a class="ks-btn ks-btn-outline-danger ks-btn-sm" href="supplier_hapus.php?id_supplier=<?= (int) $s['id_supplier'] ?>">Hapus</a>
               </td>
             </tr>
-          <?php else: ?>
-            <?php foreach ($daftarSupplier as $s): ?>
-              <tr>
-                <td><?= (int) $s['id_supplier'] ?></td>
-                <td class="fw-semibold"><?= htmlspecialchars($s['nama_supplier']) ?></td>
-                <td><?= $s['kota'] !== null && $s['kota'] !== '' ? htmlspecialchars($s['kota']) : '<span class="text-secondary">-</span>' ?></td>
-                <td class="text-end">
-                  <a class="btn btn-sm btn-outline-primary" href="supplier_edit.php?id_supplier=<?= (int) $s['id_supplier'] ?>">Edit</a>
-                  <a class="btn btn-sm btn-outline-danger" href="supplier_hapus.php?id_supplier=<?= (int) $s['id_supplier'] ?>">Hapus</a>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </tbody>
+    </table>
   </div>
 </div>
 

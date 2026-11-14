@@ -43,62 +43,69 @@ $halaman = 'kasir';
 require __DIR__ . '/partials/header.php';
 ?>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-  <div>
-    <span class="badge text-bg-success mb-2">Master Data</span>
-    <h1 class="h3 mb-1">Daftar Kasir</h1>
-    <p class="text-secondary mb-0">Manajemen akun kasir bertugas &middot; database <code>db_penjualan</code></p>
+<div class="ks-page-header mb-4">
+  <div class="ks-page-header-left">
+    <span class="ks-badge ks-badge-neutral mb-2">Master Data</span>
+    <h1 class="ks-page-title">Daftar Kasir</h1>
+    <p class="ks-page-subtitle">Koperasi Merah Hitam</p>
   </div>
   <div class="d-flex gap-2">
-    <a class="btn btn-primary" href="kasir_tambah.php">+ Tambah Kasir</a>
+    <a class="ks-btn ks-btn-primary" href="kasir_tambah.php">+ Tambah Kasir</a>
   </div>
 </div>
 
 <?php if ($errorTabel !== ''): ?>
-  <div class="alert alert-danger">
-    <strong>Tabel kasir belum bisa dibaca.</strong>
-    <div class="small mt-1">Pesan MySQL: <?= htmlspecialchars($errorTabel) ?></div>
+  <div class="ks-alert ks-alert-danger mb-3">
+    <span class="ks-alert-icon">⚠️</span>
+    <div>
+      <strong>Tabel kasir belum bisa dibaca.</strong>
+      <div class="ks-text-sm mt-1">Pesan MySQL: <?= htmlspecialchars($errorTabel) ?></div>
+    </div>
   </div>
 <?php endif; ?>
 
 <?php if (isset($pesanStatus[$status])): ?>
-  <div class="alert alert-<?= $pesanStatus[$status][0] ?> alert-dismissible fade show" role="alert">
-    <?= htmlspecialchars($pesanStatus[$status][1]) ?>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  <?php $tipe = $pesanStatus[$status][0] === 'success' ? 'ks-alert-success' : ($pesanStatus[$status][0] === 'warning' ? 'ks-alert-warning' : 'ks-alert-danger'); ?>
+  <div class="ks-alert <?= $tipe ?> mb-3">
+    <span class="ks-alert-icon"><?= $pesanStatus[$status][0] === 'success' ? '✅' : '⚠️' ?></span>
+    <span><?= htmlspecialchars($pesanStatus[$status][1]) ?></span>
   </div>
 <?php endif; ?>
 
 <div class="row g-3 mb-4">
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Total Kasir</div>
-        <div class="fs-3 fw-bold"><?= $jumlahKasir ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon teal">👤</div>
+      <div>
+        <div class="ks-stat-label">Total Kasir</div>
+        <div class="ks-stat-value"><?= $jumlahKasir ?></div>
       </div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Kasir Aktif</div>
-        <div class="fs-3 fw-bold text-success"><?= $jumlahAktif ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon green">✅</div>
+      <div>
+        <div class="ks-stat-label">Kasir Aktif</div>
+        <div class="ks-stat-value"><?= $jumlahAktif ?></div>
       </div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <div class="text-secondary small">Nonaktif</div>
-        <div class="fs-3 fw-bold text-secondary"><?= $jumlahNonaktif ?></div>
+    <div class="ks-stat d-flex align-items-center gap-3">
+      <div class="ks-stat-icon red">🚫</div>
+      <div>
+        <div class="ks-stat-label">Nonaktif</div>
+        <div class="ks-stat-value"><?= $jumlahNonaktif ?></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="card mb-4">
-  <div class="table-responsive">
-    <table class="table table-hover mb-0">
-      <thead class="table-light">
+<div class="ks-card mb-4">
+  <div class="ks-table-wrap">
+    <table class="ks-table">
+      <thead>
         <tr>
           <th>ID</th>
           <th>Nama Kasir</th>
@@ -110,7 +117,7 @@ require __DIR__ . '/partials/header.php';
       <tbody>
         <?php if ($jumlahKasir === 0): ?>
           <tr>
-            <td colspan="5" class="text-center text-secondary py-4">Belum ada data kasir.</td>
+            <td colspan="5" class="text-center ks-text-muted py-4">Belum ada data kasir.</td>
           </tr>
         <?php else: ?>
           <?php foreach ($daftarKasir as $kasir): ?>
@@ -119,20 +126,20 @@ require __DIR__ . '/partials/header.php';
               <td><?= htmlspecialchars($kasir['nama_kasir']) ?></td>
               <td>
                 <?php if ($kasir['status'] === 'aktif'): ?>
-                  <span class="badge text-bg-success">Aktif</span>
+                  <span class="ks-badge ks-badge-success">Aktif</span>
                 <?php else: ?>
-                  <span class="badge text-bg-secondary">Nonaktif</span>
+                  <span class="ks-badge ks-badge-neutral">Nonaktif</span>
                 <?php endif; ?>
               </td>
               <td>
                 <?= $kasir['tanggal_keluar'] ? htmlspecialchars($kasir['tanggal_keluar']) : '-' ?>
               </td>
               <td class="text-end">
-                <a class="btn btn-sm btn-outline-primary" href="kasir_edit.php?id_kasir=<?= (int) $kasir['id_kasir'] ?>">Edit</a>
+                <a class="ks-btn ks-btn-ghost ks-btn-sm" href="kasir_edit.php?id_kasir=<?= (int) $kasir['id_kasir'] ?>">Edit</a>
                 <?php if ($kasir['status'] === 'aktif'): ?>
-                  <a class="btn btn-sm btn-outline-danger" href="kasir_nonaktifkan.php?id_kasir=<?= (int) $kasir['id_kasir'] ?>">Nonaktifkan</a>
+                  <a class="ks-btn ks-btn-outline-danger ks-btn-sm" href="kasir_nonaktifkan.php?id_kasir=<?= (int) $kasir['id_kasir'] ?>">Nonaktifkan</a>
                 <?php else: ?>
-                  <button class="btn btn-sm btn-outline-secondary" disabled>Nonaktif</button>
+                  <button class="ks-btn ks-btn-ghost ks-btn-sm" disabled>Nonaktif</button>
                 <?php endif; ?>
               </td>
             </tr>
