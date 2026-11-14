@@ -168,7 +168,7 @@ function renderAvatarFormal(string $tipe, int $size = 54): string {
 ?>
 
 <!-- Compact 3D Nature Hero Header -->
-<div class="card p-3 p-md-3 mb-3 profile-hero-3d">
+<div class="card p-3 p-md-4 mb-3 profile-hero-3d">
   <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
     <div class="d-flex align-items-center gap-3">
       <div class="hero-3d-badge">
@@ -196,12 +196,12 @@ function renderAvatarFormal(string $tipe, int $size = 54): string {
     <div class="col-md-6 col-lg-4">
       <div class="card h-100 profile-card-3d p-3" style="--card-glow: <?= $item['warna_bg'] ?>26;">
         <!-- Top Row: Avatar + Identity -->
-        <div class="d-flex align-items-center gap-2.5 mb-2">
+        <div class="d-flex align-items-center gap-3 mb-2">
           <div class="avatar-orb flex-shrink-0" style="border-color: <?= $item['warna_bg'] ?>66; box-shadow: 0 0 12px <?= $item['warna_bg'] ?>33;">
             <?= renderAvatarFormal($item['gender'], 54) ?>
           </div>
           <div class="flex-grow-1 min-w-0">
-            <div class="d-flex align-items-center justify-content-between gap-1 mb-0.5">
+            <div class="d-flex align-items-center justify-content-between gap-1 mb-1">
               <h3 class="h6 fw-bold mb-0 text-white text-truncate" title="<?= htmlspecialchars($item['nama']) ?>">
                 <?= htmlspecialchars($item['nama']) ?>
               </h3>
@@ -246,7 +246,7 @@ function renderAvatarFormal(string $tipe, int $size = 54): string {
 </div>
 
 <!-- Navigasi Cepat Proyek -->
-<div class="card p-2.5 px-3 mb-3 profile-quick-nav">
+<div class="card p-3 mb-3 profile-quick-nav">
   <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
     <span class="small text-muted d-flex align-items-center gap-1">
       <span style="color: #34d399;">🌿</span> Navigasi Modul:
