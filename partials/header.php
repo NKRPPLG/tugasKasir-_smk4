@@ -31,7 +31,7 @@ $halaman = $halaman ?? '';
 
   <div class="website-container" id="websiteContent">
     <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top glass-navbar">
-      <div class="container">
+      <div class="container-fluid px-3 px-lg-4 px-xl-5">
         <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.php">
           <span class="brand-badge-nature">🌿</span> KasirSMK
         </a>
@@ -65,6 +65,9 @@ $halaman = $halaman ?? '';
             </li>
             <li class="nav-item">
               <a class="nav-link <?= $halaman === 'panduan' ? 'active' : '' ?>" href="panduan.php">Panduan</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <?= $halaman === 'profil' ? 'active' : '' ?>" href="profil.php">Profil Tim</a>
             </li>
             <li class="nav-item ms-lg-2">
               <a class="btn btn-sm btn-outline-success text-white px-3 py-1 rounded-pill" href="nature-demo.html" target="_blank">
